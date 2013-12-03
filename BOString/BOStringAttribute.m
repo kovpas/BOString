@@ -1,0 +1,33 @@
+//
+//  BOStringAttribute.m
+//  BOStringDemo
+//
+//  Created by Pavel Mazurin on 28/11/13.
+//  Copyright (c) 2013 Home. All rights reserved.
+//
+
+#import "BOStringAttribute.h"
+
+@implementation BOStringAttribute
+
+- (instancetype)with
+{
+    return self;
+}
+
+- (void(^)())stringRange
+{
+    return ^{
+        _attributeRange = NSMakeRange(0, _stringLength);
+    };
+}
+
+- (BOStringAttribute *(^)(NSRange))range
+{
+    return ^BOStringAttribute *(NSRange newRange) {
+        _attributeRange = newRange;
+        return self;
+    };
+}
+
+@end
