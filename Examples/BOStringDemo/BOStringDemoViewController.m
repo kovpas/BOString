@@ -9,6 +9,8 @@
 #import "BOStringDemoViewController.h"
 #import "BOString.h"
 
+#define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedDescending)
+
 @interface BOStringDemoViewController ()
 
 @property (nonatomic, strong) UILabel *attributedTextView;
@@ -47,7 +49,7 @@
             make.foregroundColor([UIColor redColor]);
             make.font([fnt2 fontWithSize:10]);
             make.ligature(@2);
-            make.baselineOffset(@1);
+            if (IS_IOS7) make.baselineOffset(@1);
         });
 
         make.with.range(NSMakeRange(6, 9), ^{
@@ -57,7 +59,7 @@
 
         make.with.range(NSMakeRange(7, 4), ^{
             make.strikethroughStyle(@(NSUnderlineStyleSingle));
-            make.strikethroughColor([UIColor redColor]);
+            if (IS_IOS7) make.strikethroughColor([UIColor redColor]);
             make.backgroundColor([UIColor yellowColor]);
         });
     }];
@@ -65,17 +67,21 @@
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Test attributed string"
                                                                                          attributes:@{NSForegroundColorAttributeName: [UIColor greenColor]
                                                                                                       , NSFontAttributeName: [fnt fontWithSize:20]}];
-    [attributedString addAttributes:@{NSForegroundColorAttributeName: [UIColor redColor]
-                                      , NSFontAttributeName: [fnt2 fontWithSize:10]
-                                      , NSLigatureAttributeName: @2
-                                      , NSBaselineOffsetAttributeName: @1}
+    NSMutableDictionary *attributes = [@{NSForegroundColorAttributeName: [UIColor redColor]
+        , NSFontAttributeName: [fnt2 fontWithSize:10]
+        , NSLigatureAttributeName: @2} mutableCopy];
+    if (IS_IOS7) [attributes setObject:@1 forKey:NSBaselineOffsetAttributeName];
+    
+    [attributedString addAttributes:attributes
                               range:NSMakeRange(3, 5)];
     [attributedString addAttributes:@{NSForegroundColorAttributeName: [UIColor blueColor]
                                       , NSFontAttributeName: [fnt2 fontWithSize:30]}
                               range:NSMakeRange(6, 9)];
-    [attributedString addAttributes:@{NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle)
-                                      , NSStrikethroughColorAttributeName: [UIColor redColor]
-                                      , NSBackgroundColorAttributeName: [UIColor yellowColor]}
+    attributes = [@{NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle)
+                    , NSBackgroundColorAttributeName: [UIColor yellowColor]} mutableCopy];
+    if (IS_IOS7) [attributes setObject:[UIColor redColor] forKey:NSStrikethroughColorAttributeName];
+
+    [attributedString addAttributes:attributes
                               range:NSMakeRange(7, 4)];
     _attributedTextView2.attributedText = attributedString;
 }
