@@ -1,8 +1,6 @@
 rvm: 1.9.3
 language: objective-c
 before_install:
-    - brew update
-    - brew upgrade xctool
     - gem install xcpretty
 
 script:
