@@ -25,9 +25,12 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 @end
 
+#if TARGET_OS_IPHONE
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedDescending)
 #define NSAttributeAssert(attr) NSAssert(IS_IOS7, @"Attribute %@ is supported on iOS 7 or later", attr)
-
+#else
+#define NSAttributeAssert(...)
+#endif
 @implementation BOStringMaker
 
 - (instancetype)initWithString:(NSString *)string
@@ -193,9 +196,9 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     return attribute;
 }
 
-- (BOStringAttribute *(^)(UIFont *))font
+- (BOStringAttribute *(^)(BOSFont *))font
 {
-    return ^BOStringAttribute *(UIFont *font) {
+    return ^BOStringAttribute *(BOSFont *font) {
         return [self addAttributeWithName:NSFontAttributeName value:font];
     };
 }
@@ -207,16 +210,16 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
-- (BOStringAttribute *(^)(UIColor *))foregroundColor
+- (BOStringAttribute *(^)(BOSColor *))foregroundColor
 {
-    return ^BOStringAttribute *(UIColor *foregroundColor) {
+    return ^BOStringAttribute *(BOSColor *foregroundColor) {
         return [self addAttributeWithName:NSForegroundColorAttributeName value:foregroundColor];
     };
 }
 
-- (BOStringAttribute *(^)(UIColor *))backgroundColor
+- (BOStringAttribute *(^)(BOSColor *))backgroundColor
 {
-    return ^BOStringAttribute *(UIColor *backgroundColor) {
+    return ^BOStringAttribute *(BOSColor *backgroundColor) {
         return [self addAttributeWithName:NSBackgroundColorAttributeName value:backgroundColor];
     };
 }
@@ -250,9 +253,9 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 }
 
 
-- (BOStringAttribute *(^)(UIColor *))strokeColor
+- (BOStringAttribute *(^)(BOSColor *))strokeColor
 {
-    return ^BOStringAttribute *(UIColor *strokeColor) {
+    return ^BOStringAttribute *(BOSColor *strokeColor) {
         return [self addAttributeWithName:NSStrokeColorAttributeName value:strokeColor];
     };
 }
@@ -271,6 +274,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
+#if TARGET_OS_IPHONE
 - (BOStringAttribute *(^)(NSString *))textEffect
 {
     NSAttributeAssert(@"NSTextEffectAttributeName");
@@ -278,6 +282,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
         return [self addAttributeWithName:NSTextEffectAttributeName value:textEffect];
     };
 }
+#endif
 
 - (BOStringAttribute *(^)(NSTextAttachment *))attachment
 {
@@ -304,18 +309,18 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
-- (BOStringAttribute *(^)(UIColor *))underlineColor
+- (BOStringAttribute *(^)(BOSColor *))underlineColor
 {
     NSAttributeAssert(@"NSUnderlineColorAttributeName");
-    return ^BOStringAttribute *(UIColor *underlineColor) {
+    return ^BOStringAttribute *(BOSColor *underlineColor) {
         return [self addAttributeWithName:NSUnderlineColorAttributeName value:underlineColor];
     };
 }
 
-- (BOStringAttribute *(^)(UIColor *))strikethroughColor
+- (BOStringAttribute *(^)(BOSColor *))strikethroughColor
 {
     NSAttributeAssert(@"NSStrikethroughColorAttributeName");
-    return ^BOStringAttribute *(UIColor *strikethroughColor) {
+    return ^BOStringAttribute *(BOSColor *strikethroughColor) {
         return [self addAttributeWithName:NSStrikethroughColorAttributeName value:strikethroughColor];
     };
 }

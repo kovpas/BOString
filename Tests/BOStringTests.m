@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Home. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+#define EXP_SHORTHAND
+
 #import "BOString.h"
 #import <Specta/Specta.h>
-#define EXP_SHORTHAND
 #import <Expecta/Expecta.h>
 
 #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedDescending)
