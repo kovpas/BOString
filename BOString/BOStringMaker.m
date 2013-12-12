@@ -25,6 +25,9 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 @end
 
+#define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedDescending)
+#define NSAttributeAssert(attr) NSAssert(IS_IOS7, @"Attribute %@ is supported on iOS 7 or later", attr)
+
 @implementation BOStringMaker
 
 - (instancetype)initWithString:(NSString *)string
@@ -270,6 +273,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(NSString *))textEffect
 {
+    NSAttributeAssert(@"NSTextEffectAttributeName");
     return ^BOStringAttribute *(NSString *textEffect) {
         return [self addAttributeWithName:NSTextEffectAttributeName value:textEffect];
     };
@@ -277,6 +281,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(NSTextAttachment *))attachment
 {
+    NSAttributeAssert(@"NSAttachmentAttributeName");
     return ^BOStringAttribute *(NSTextAttachment *attachment) {
         return [self addAttributeWithName:NSAttachmentAttributeName value:attachment];
     };
@@ -284,6 +289,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(id))link
 {
+    NSAttributeAssert(@"NSLinkAttributeName");
     return ^BOStringAttribute *(id link) {
         NSAssert([link isKindOfClass:[NSURL class]] || [link isKindOfClass:[NSString class]], @"The value of link attribute is an NSURL object (preferred) or an NSString object.");
         return [self addAttributeWithName:NSLinkAttributeName value:link];
@@ -292,6 +298,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(NSNumber *))baselineOffset
 {
+    NSAttributeAssert(@"NSBaselineOffsetAttributeName");
     return ^BOStringAttribute *(NSNumber *baselineOffset) {
         return [self addAttributeWithName:NSBaselineOffsetAttributeName value:baselineOffset];
     };
@@ -299,6 +306,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(UIColor *))underlineColor
 {
+    NSAttributeAssert(@"NSUnderlineColorAttributeName");
     return ^BOStringAttribute *(UIColor *underlineColor) {
         return [self addAttributeWithName:NSUnderlineColorAttributeName value:underlineColor];
     };
@@ -306,6 +314,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(UIColor *))strikethroughColor
 {
+    NSAttributeAssert(@"NSStrikethroughColorAttributeName");
     return ^BOStringAttribute *(UIColor *strikethroughColor) {
         return [self addAttributeWithName:NSStrikethroughColorAttributeName value:strikethroughColor];
     };
@@ -313,6 +322,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(NSNumber *))obliqueness
 {
+    NSAttributeAssert(@"NSObliquenessAttributeName");
     return ^BOStringAttribute *(NSNumber *obliqueness) {
         return [self addAttributeWithName:NSObliquenessAttributeName value:obliqueness];
     };
@@ -320,6 +330,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(NSNumber *))expansion
 {
+    NSAttributeAssert(@"NSExpansionAttributeName");
     return ^BOStringAttribute *(NSNumber *expansion) {
         return [self addAttributeWithName:NSExpansionAttributeName value:expansion];
     };
@@ -327,6 +338,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 
 - (BOStringAttribute *(^)(id))writingDirection
 {
+    NSAttributeAssert(@"NSWritingDirectionAttributeName");
     return ^BOStringAttribute *(id writingDirection) {
         NSAssert([writingDirection isKindOfClass:[NSArray class]] || [writingDirection isKindOfClass:[NSNumber class]], @"The value of writingDirection attribute is an NSArray object or an NSNumber object.");
         return [self addAttributeWithName:NSWritingDirectionAttributeName value:writingDirection];

@@ -34,6 +34,7 @@
 - (BOStringAttribute *(^)(UIColor *))strokeColor;
 - (BOStringAttribute *(^)(NSNumber *))strokeWidth;
 - (BOStringAttribute *(^)(NSShadow *))shadow;
+
 - (BOStringAttribute *(^)(NSString *))textEffect;
 - (BOStringAttribute *(^)(NSTextAttachment *))attachment;
 - (BOStringAttribute *(^)(id))link;

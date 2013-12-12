@@ -1,0 +1,7 @@
+rvm: 1.9.3
+language: objective-c
+before_install:
+    - gem install xcpretty
+
+script:
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo' -sdk iphonesimulator7.0 -destination "platform=iOS Simulator,name=iPhone Retina (4-inch),OS=latest" clean build test | xcpretty -c 
