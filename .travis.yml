@@ -2,7 +2,7 @@ rvm: 1.9.3
 language: objective-c
 before_install:
     - brew update
-    - brew install xctool
+    - brew upgrade xctool
 
 script:
   - xctool -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo' -sdk iphonesimulator7.0 clean build test
