@@ -3,7 +3,6 @@ language: objective-c
 before_install:
     - brew update
     - brew upgrade xctool
-    - gem install xcpretty 
 
 script:
-  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo' -sdk iphonesimulator7.0 clean build test | xcpretty -c
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo' -sdk iphonesimulator7.0 clean build test 
