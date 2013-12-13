@@ -1,4 +1,4 @@
-NSAttributedString &nbsp; &nbsp; [![Build Status](https://travis-ci.org/kovpas/BOString.png?branch=develop)](https://travis-ci.org/kovpas/BOString)
+NSAttributedString&nbsp;&nbsp;[![Build Status](https://travis-ci.org/kovpas/BOString.png?branch=develop)](https://travis-ci.org/kovpas/BOString)
 ========
 
 It's not a secret that NSAttributedString API is far from perfect. Based on NSDictionary, it looks ugly, counter-OOP and hard to maintain...
@@ -71,7 +71,7 @@ underlineStyle;
 strokeColor;
 strokeWidth;
 shadow;
-textEffect; // iOS only
+textEffect;           // iOS only
 attachment;
 link;
 baselineOffset;
@@ -81,13 +81,13 @@ obliqueness;
 expansion;
 writingDirection;
 verticalGlyphForm;
-superscript; // OS X only
-cursor; // OS X only
-toolTip; // OS X only
-characterShape; // OS X only
-glyphInfo; // OS X only
-markedClauseSegment; // OS X only
-textAlternatives; // OS X only
+superscript;          // OS X only
+cursor;               // OS X only
+toolTip;              // OS X only
+characterShape;       // OS X only
+glyphInfo;            // OS X only
+markedClauseSegment;  // OS X only
+textAlternatives;     // OS X only
 ````
 
 While making a string you can specify ranges for attributes either with a block-based syntax as in the example above:
@@ -98,7 +98,7 @@ make.with.range(NSMakeRange(6, 9), ^{
 });
 ````
 
-or set range for a specific attribute (with is an optional semantic filler):
+or set range for a specific attribute (`with` is an optional semantic filler):
 
 ````
     make.foregroundColor([UIColor blueColor]).with.range(NSRange(6, 9));
@@ -133,8 +133,10 @@ NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *ma
 Supported platforms
 =======
 
-- **iOS 6.0** and later. Should work fine on iOS 4.3 and later, but I haven't had a chance to test it.
-- **OS X 10.9** and later. Should work fine on OS X 10.5 and later, but I haven't had a chance to test it.
+- **iOS 6.0** and later.
+- **OS X Mavericks (10.9)** and later.
+
+Should work fine on iOS 4.3+ and OS X 10.5+ (except of several attributes), but I haven't had a chance to test it.
 
 Installation
 =======
