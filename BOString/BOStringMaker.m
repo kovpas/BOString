@@ -357,5 +357,57 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
+#if !TARGET_OS_IPHONE
+- (BOStringAttribute *(^)(NSNumber *))superscript
+{
+    return ^BOStringAttribute *(NSNumber *superscript) {
+        return [self addAttributeWithName:NSSuperscriptAttributeName value:superscript];
+    };
+}
+
+- (BOStringAttribute *(^)(NSCursor *))cursor
+{
+    return ^BOStringAttribute *(NSCursor *cursor) {
+        return [self addAttributeWithName:NSCursorAttributeName value:cursor];
+    };
+}
+
+- (BOStringAttribute *(^)(NSString *))toolTip
+{
+    return ^BOStringAttribute *(NSString *toolTip) {
+        return [self addAttributeWithName:NSToolTipAttributeName value:toolTip];
+    };
+}
+
+- (BOStringAttribute *(^)(NSNumber *))characterShape
+{
+    return ^BOStringAttribute *(NSNumber *characterShape) {
+        return [self addAttributeWithName:NSCharacterShapeAttributeName value:characterShape];
+    };
+}
+
+- (BOStringAttribute *(^)(NSGlyphInfo *))glyphInfo
+{
+    return ^BOStringAttribute *(NSGlyphInfo *glyphInfo) {
+        return [self addAttributeWithName:NSGlyphInfoAttributeName value:glyphInfo];
+    };
+}
+
+- (BOStringAttribute *(^)(NSNumber *))markedClauseSegment
+{
+    return ^BOStringAttribute *(NSNumber *markedClauseSegment) {
+        return [self addAttributeWithName:NSMarkedClauseSegmentAttributeName value:markedClauseSegment];
+    };
+}
+
+- (BOStringAttribute *(^)(NSTextAlternatives *))textAlternatives
+{
+    return ^BOStringAttribute *(NSTextAlternatives *textAlternatives) {
+        return [self addAttributeWithName:NSTextAlternativesAttributeName value:textAlternatives];
+    };
+}
+
+#endif
+
 
 @end

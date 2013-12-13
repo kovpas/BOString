@@ -71,7 +71,7 @@ underlineStyle;
 strokeColor;
 strokeWidth;
 shadow;
-textEffect;
+textEffect; // iOS only
 attachment;
 link;
 baselineOffset;
@@ -81,6 +81,13 @@ obliqueness;
 expansion;
 writingDirection;
 verticalGlyphForm;
+superscript; // OS X only
+cursor; // OS X only
+toolTip; // OS X only
+characterShape; // OS X only
+glyphInfo; // OS X only
+markedClauseSegment; // OS X only
+textAlternatives; // OS X only
 ````
 
 While making a string you can specify ranges for attributes either with a block-based syntax as in the example above:
@@ -122,6 +129,12 @@ NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *ma
     });
 }];
 ````
+
+Supported platforms
+=======
+
+- **iOS 6.0** and later. Should work fine on iOS 4.3 and later, but I haven't had a chance to test it.
+- **OS X 10.9** and later. Should work fine on OS X 10.5 and later, but I haven't had a chance to test it.
 
 Installation
 =======

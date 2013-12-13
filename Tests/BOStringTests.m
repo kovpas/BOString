@@ -14,7 +14,7 @@
 
 #if TARGET_OS_IPHONE
     #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedDescending)
-#elif TARGET_OS_MAC
+#else
     #define IS_IOS7 YES
 #endif
 
@@ -59,7 +59,7 @@ describe(@"Attribute", ^{
         NSMutableParagraphStyle *testParagraphStyle = [[NSMutableParagraphStyle alloc] init];
 #if TARGET_OS_IPHONE
         testParagraphStyle.alignment = NSTextAlignmentCenter;
-#elif TARGET_OS_MAC
+#else
         testParagraphStyle.alignment = NSCenterTextAlignment;
 #endif
         testParagraphStyle.lineBreakMode = NSLineBreakByTruncatingMiddle;
@@ -316,6 +316,88 @@ describe(@"Attribute", ^{
         
         expect(result).to.equal(testAttributedString);
     });
+#if !TARGET_OS_IPHONE
+    it( @"superscript should change", ^{
+        NSNumber *testSuperscript = @(2);
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.superscript(testSuperscript);
+        }];
+        
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSSuperscriptAttributeName: testSuperscript}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it( @"cursor should change", ^{
+        NSCursor *testCursor = [NSCursor resizeRightCursor];
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.cursor(testCursor);
+        }];
+        
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSCursorAttributeName: testCursor}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it( @"toolTip should change", ^{
+        NSString *testToolTip = @"Test tooltip";
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.toolTip(testToolTip);
+        }];
+        
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSToolTipAttributeName: testToolTip}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it( @"characterShape should change", ^{
+        NSNumber *testCharacterShape = @(kTraditionalAltTwoSelector);
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.characterShape(testCharacterShape);
+        }];
+        
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSCharacterShapeAttributeName: testCharacterShape}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it( @"glyphInfo should change", ^{
+        NSString* baseString = [NSString stringWithFormat:@"%C", (unichar)0xFFFD];
+        NSGlyphInfo* testGlyphInfo = [NSGlyphInfo glyphInfoWithGlyphName:@"copyright"
+                                                                 forFont:[NSFont systemFontOfSize:10]
+                                                              baseString:baseString];
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.glyphInfo(testGlyphInfo);
+        }];
+        
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSGlyphInfoAttributeName: testGlyphInfo}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it( @"markedClauseSegment should change", ^{
+        NSNumber *testMarkedClauseSegment = @(1);
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.markedClauseSegment(testMarkedClauseSegment);
+        }];
+        
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSMarkedClauseSegmentAttributeName: testMarkedClauseSegment}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it( @"textAlternatives should change", ^{
+        NSTextAlternatives *testTextAlternatives = [[NSTextAlternatives alloc] initWithPrimaryString:_testString alternativeStrings:@[@"Alternative 1", @"Alternative 2"]];
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.textAlternatives(testTextAlternatives);
+        }];
+        
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSTextAlternativesAttributeName: testTextAlternatives}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+#endif
 });
 
 describe(@"Ranged attributes", ^{

@@ -12,7 +12,7 @@
 #if TARGET_OS_IPHONE
     #define BOSColor UIColor
     #define BOSFont UIFont
-#elif TARGET_OS_MAC
+#else
     #define BOSColor NSColor
     #define BOSFont NSFont
 #endif
@@ -55,5 +55,15 @@
 - (BOStringAttribute *(^)(NSNumber *))expansion;
 - (BOStringAttribute *(^)(id))writingDirection;
 - (BOStringAttribute *(^)(NSNumber *))verticalGlyphForm;
+
+#if !TARGET_OS_IPHONE
+- (BOStringAttribute *(^)(NSNumber *))superscript;
+- (BOStringAttribute *(^)(NSCursor *))cursor;
+- (BOStringAttribute *(^)(NSString *))toolTip;
+- (BOStringAttribute *(^)(NSNumber *))characterShape;
+- (BOStringAttribute *(^)(NSGlyphInfo *))glyphInfo;
+- (BOStringAttribute *(^)(NSNumber *))markedClauseSegment;
+- (BOStringAttribute *(^)(NSTextAlternatives *))textAlternatives;
+#endif
 
 @end
