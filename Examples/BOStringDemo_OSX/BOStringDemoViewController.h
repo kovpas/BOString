@@ -10,4 +10,6 @@
 
 @interface BOStringDemoViewController : NSViewController
 
+- (void) setupLabels;
+
 @end

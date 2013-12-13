@@ -38,16 +38,6 @@
                ReferencedContainer = "container:BOStringDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "201DF107185A098100062FB4"
-               BuildableName = "BOStringTests_OSX.xctest"
-               BlueprintName = "BOStringTests_OSX"
-               ReferencedContainer = "container:BOStringDemo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
