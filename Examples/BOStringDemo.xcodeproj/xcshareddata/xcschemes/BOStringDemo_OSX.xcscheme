@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2051B725184799DA00D6DA45"
-               BuildableName = "BOStringDemo.app"
-               BlueprintName = "BOStringDemo"
+               BlueprintIdentifier = "201DF0E8185A098100062FB4"
+               BuildableName = "BOStringDemo_OSX.app"
+               BlueprintName = "BOStringDemo_OSX"
+               ReferencedContainer = "container:BOStringDemo.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "201DF107185A098100062FB4"
+               BuildableName = "BOStringTests_OSX.xctest"
+               BlueprintName = "BOStringTests_OSX"
                ReferencedContainer = "container:BOStringDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +46,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "20F462F2185607A300A92906"
-               BuildableName = "BOStringTests.xctest"
-               BlueprintName = "BOStringTests"
+               BlueprintIdentifier = "201DF107185A098100062FB4"
+               BuildableName = "BOStringTests_OSX.xctest"
+               BlueprintName = "BOStringTests_OSX"
                ReferencedContainer = "container:BOStringDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +56,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2051B725184799DA00D6DA45"
-            BuildableName = "BOStringDemo.app"
-            BlueprintName = "BOStringDemo"
+            BlueprintIdentifier = "201DF0E8185A098100062FB4"
+            BuildableName = "BOStringDemo_OSX.app"
+            BlueprintName = "BOStringDemo_OSX"
             ReferencedContainer = "container:BOStringDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -61,9 +75,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2051B725184799DA00D6DA45"
-            BuildableName = "BOStringDemo.app"
-            BlueprintName = "BOStringDemo"
+            BlueprintIdentifier = "201DF0E8185A098100062FB4"
+            BuildableName = "BOStringDemo_OSX.app"
+            BlueprintName = "BOStringDemo_OSX"
             ReferencedContainer = "container:BOStringDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -79,9 +93,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2051B725184799DA00D6DA45"
-            BuildableName = "BOStringDemo.app"
-            BlueprintName = "BOStringDemo"
+            BlueprintIdentifier = "201DF0E8185A098100062FB4"
+            BuildableName = "BOStringDemo_OSX.app"
+            BlueprintName = "BOStringDemo_OSX"
             ReferencedContainer = "container:BOStringDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
