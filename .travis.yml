@@ -4,4 +4,5 @@ before_install:
     - gem install xcpretty
 
 script:
-  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo' -sdk iphonesimulator7.0 -destination "platform=iOS Simulator,name=iPhone Retina (4-inch),OS=latest" clean build test | xcpretty -c 
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_iOS' -sdk iphonesimulator7.0 -destination "platform=iOS Simulator,name=iPhone Retina (4-inch),OS=latest" clean build test | xcpretty -c 
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_OSX' -sdk macosx10.9 clean build test | xcpretty -c 

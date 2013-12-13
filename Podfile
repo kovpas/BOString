@@ -1,12 +1,24 @@
 workspace 'BOString'
 
-platform :ios, '6.0'
-
 xcodeproj 'Examples/BOStringDemo'
-pod 'BOString', :path => './'
 
-target :test, :exclusive => true do
-  link_with 'BOStringTests'
+target 'BOStringDemo_OSX', :exclusive => false do
+  platform :osx, '10.9'
+  pod 'BOString', :path => './'
+end
+
+target 'BOStringDemo_iOS', :exclusive => false do
+  platform :ios, '6.0'
+  pod 'BOString', :path => './'
+end
+
+target 'BOStringTests_OSX', :exclusive => true do
+  platform :osx, '10.9'
+  pod 'Specta'
+  pod 'Expecta'
+end
+
+target 'BOStringTests_iOS', :exclusive => true do
   pod 'Specta'
   pod 'Expecta'
 end

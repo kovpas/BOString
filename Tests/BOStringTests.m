@@ -6,13 +6,18 @@
 //  Copyright (c) 2013 Home. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+#define EXP_SHORTHAND
+
 #import "BOString.h"
 #import <Specta/Specta.h>
-#define EXP_SHORTHAND
 #import <Expecta/Expecta.h>
 
-#define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedDescending)
+#if TARGET_OS_IPHONE
+    #define IS_IOS7 ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedDescending)
+#elif TARGET_OS_MAC
+    #define IS_IOS7 YES
+#endif
+
 
 SpecBegin(BOString)
 
@@ -40,7 +45,7 @@ describe(@"Attribute", ^{
     });
     
     it(@"font should change", ^{
-        UIFont *testFont = [UIFont boldSystemFontOfSize:12];
+        BOSFont *testFont = [BOSFont boldSystemFontOfSize:12];
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.font(testFont);
         }];
@@ -52,7 +57,11 @@ describe(@"Attribute", ^{
     
     it(@"paragraphStyle should change", ^{
         NSMutableParagraphStyle *testParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+#if TARGET_OS_IPHONE
         testParagraphStyle.alignment = NSTextAlignmentCenter;
+#elif TARGET_OS_MAC
+        testParagraphStyle.alignment = NSCenterTextAlignment;
+#endif
         testParagraphStyle.lineBreakMode = NSLineBreakByTruncatingMiddle;
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.paragraphStyle(testParagraphStyle);
@@ -64,7 +73,7 @@ describe(@"Attribute", ^{
     });
     
     it(@"foregroundColor should change", ^{
-        UIColor *testColor = [UIColor redColor];
+        BOSColor *testColor = [BOSColor redColor];
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.foregroundColor(testColor);
         }];
@@ -75,7 +84,7 @@ describe(@"Attribute", ^{
     });
     
     it(@"backgroundColor should change", ^{
-        UIColor *testColor = [UIColor blueColor];
+        BOSColor *testColor = [BOSColor blueColor];
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.backgroundColor(testColor);
         }];
@@ -130,7 +139,7 @@ describe(@"Attribute", ^{
     });
     
     it(@"strokeColor should change", ^{
-        UIColor *testStrokeColor = [UIColor redColor];
+        BOSColor *testStrokeColor = [BOSColor redColor];
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.strokeColor(testStrokeColor);
         }];
@@ -153,7 +162,7 @@ describe(@"Attribute", ^{
     
     it(@"shadow should change", ^{
         NSShadow *testShadow = [[NSShadow alloc] init];
-        testShadow.shadowColor = [UIColor greenColor];
+        testShadow.shadowColor = [BOSColor greenColor];
         testShadow.shadowOffset = CGSizeMake(1, 1.5);
         testShadow.shadowBlurRadius = 0.4;
         
@@ -166,6 +175,7 @@ describe(@"Attribute", ^{
         expect(result).to.equal(testAttributedString);
     });
     
+#if TARGET_OS_IPHONE
     it(@"textEffect should change", ^{
         if (!IS_IOS7) return;
         
@@ -177,14 +187,16 @@ describe(@"Attribute", ^{
         NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSTextEffectAttributeName: testTextEffect}];
         
         expect(result).to.equal(testAttributedString);
-    }
-       );
+    });
+#endif
     
     it(@"attachment should change", ^{
         if (!IS_IOS7) return;
         
         NSTextAttachment *testAttachment = [[NSTextAttachment alloc] init];
+#if TARGET_OS_IPHONE
         testAttachment.image = [[UIImage alloc] init];
+#endif
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.attachment(testAttachment);
         }];
@@ -232,7 +244,7 @@ describe(@"Attribute", ^{
     it(@"underlineColor should change", ^{
         if (!IS_IOS7) return;
         
-        UIColor *testUnderlineColor = [UIColor redColor];
+        BOSColor *testUnderlineColor = [BOSColor redColor];
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.underlineColor(testUnderlineColor);
         }];
@@ -245,7 +257,7 @@ describe(@"Attribute", ^{
     it(@"strikethroughColor should change", ^{
         if (!IS_IOS7) return;
         
-        UIColor *testStrikethroughColor = [UIColor blueColor];
+        BOSColor *testStrikethroughColor = [BOSColor blueColor];
         NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
             make.strikethroughColor(testStrikethroughColor);
         }];
@@ -307,22 +319,22 @@ describe(@"Attribute", ^{
 });
 
 describe(@"Ranged attributes", ^{
-    __block UIFont *testFont;
-    __block UIFont *testFont2;
-    __block UIColor *testColor;
-    __block UIColor *backgroundColor;
-    __block UIColor *backgroundColor2;
+    __block BOSFont *testFont;
+    __block BOSFont *testFont2;
+    __block BOSColor *testColor;
+    __block BOSColor *backgroundColor;
+    __block BOSColor *backgroundColor2;
     __block NSRange testRange;
     __block NSRange testRange2;
     __block NSRange testRange3;
 
     beforeAll(^{
         _testString = @"Test string.";
-        testFont = [UIFont boldSystemFontOfSize:12];
-        testFont2 = [UIFont boldSystemFontOfSize:14];
-        testColor = [UIColor greenColor];
-        backgroundColor = [UIColor redColor];
-        backgroundColor2 = [UIColor blueColor];
+        testFont = [BOSFont boldSystemFontOfSize:12];
+        testFont2 = [BOSFont boldSystemFontOfSize:14];
+        testColor = [BOSColor greenColor];
+        backgroundColor = [BOSColor redColor];
+        backgroundColor2 = [BOSColor blueColor];
         testRange = NSMakeRange(1, 4);
         testRange2 = NSMakeRange(7, 4);
         testRange3 = NSMakeRange(1, 5);
@@ -398,17 +410,17 @@ describe(@"Ranged attributes", ^{
 });
 
 describe(@"Attributed string", ^{
-    __block UIFont *testFont;
-    __block UIColor *testColor;
-    __block UIColor *backgroundColor;
+    __block BOSFont *testFont;
+    __block BOSColor *testColor;
+    __block BOSColor *backgroundColor;
     __block NSRange testRange2;
     __block NSRange testRange3;
     
     beforeAll(^{
         _testString = @"Test string.";
-        testFont = [UIFont boldSystemFontOfSize:12];
-        testColor = [UIColor greenColor];
-        backgroundColor = [UIColor redColor];
+        testFont = [BOSFont boldSystemFontOfSize:12];
+        testColor = [BOSColor greenColor];
+        backgroundColor = [BOSColor redColor];
         testRange2 = NSMakeRange(7, 4);
         testRange3 = NSMakeRange(1, 5);
     });
@@ -440,25 +452,25 @@ describe(@"Substring should highlight", ^{
     it(@"first instance", ^{
         NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
             make.first.substring(@"is", ^{
-                make.foregroundColor([UIColor greenColor]);
+                make.foregroundColor([BOSColor greenColor]);
             });
         }];
         
         NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
-        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(2, 2)];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(2, 2)];
         
         expect(result).to.equal(testAttributedString);
     });
     it(@"all instances", ^{
         NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
             make.each.substring(@"is", ^{
-                make.foregroundColor([UIColor greenColor]);
+                make.foregroundColor([BOSColor greenColor]);
             });
         }];
         
         NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
-        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(2, 2)];
-        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(5, 2)];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(2, 2)];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(5, 2)];
         
         expect(result).to.equal(testAttributedString);
     });
