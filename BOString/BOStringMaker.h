@@ -22,19 +22,22 @@
  *  Maker block is a list of instructions how to create an `NSAttributedString`.
  *
  *  Example:
- *
+ *  @code
  *  NSAttributedString *result = [@"string" makeString:^(BOStringMaker *make) {
  *      make.font([UIFont systemFontOfSize:12]).with.stringRange();
  *      make.foregroundColor([UIColor greenColor]).with.range(NSMakeRange(0, 5));
  *      make.backgroundColor([UIColor blueColor]).range(NSMakeRange(0, 3));
  *  }];
- *
+ *  @endcode
+ 
  *  Attributes are stored as `BOStringAttribute` objects in the internal array.
  *  After all attributes are processed, `makeString` method resolves collisions
  *  with the following algorithm:
  *
- *  - it maps array of `BOStringAttribute` objects into a dictionary:
- *      @{`NSRange` => @[@{`attribute name` => `attribute value`}, ...], ...}
+ *  - it maps array of `BOStringAttribute` objects into a dictionary:  
+ *  @code
+ *      @{NSRange => @[@{attribute name => attribute value}, ...], ...}
+ *  @endcode
  *      in this example `attribute name` is an NSAttributedString attribute name
  *      i.e. NSFontAttributeName, `attribute value` is it's value, i.e. UIFont
  *      instance.
@@ -42,14 +45,14 @@
  *      same start indexes and longer length have priority over the ones with a
  *      shorter range.
  *  - it applies all attributes with 
- *      `[NSMutableAttributedString addAttributes:range:]` method.
+ *      [NSMutableAttributedString addAttributes:range:]` method.
  *
  *  With this algorithm attributes are applied from left to right, so in case if
  *  you write something like:
- *  
+ *  @code
  *      make.foregroundColor([UIColor blueColor]).range(NSMakeRange(1, 2));
  *      make.foregroundColor([UIColor redColor]).stringRange();
- *
+ *  @endcode
  *  it makes sure that `redColor` will be applied first and `blueColor` second.
  */
 @interface BOStringMaker : NSObject
@@ -93,7 +96,7 @@
  *  passed to that block.
  *
  *  Example:
- *
+ *  @code
  *  NSAttributedString *result = [@"string" makeString:^(BOStringMaker *make) {
  *      make.with.range(NSMakeRange(0, 5), ^{
  *          make.font([UIFont systemFontOfSize:12]);
@@ -101,7 +104,7 @@
  *          make.backgroundColor([UIColor blueColor]);
  *      });
  *  }];
- *
+ *  @endcode
  *  All three attributes above will be applied for the range `(0, 5)`.
  */
 - (void(^)(NSRange, void (^)(void)))range;
@@ -111,7 +114,7 @@
  *  string.
  *
  *  Example:
- *
+ *  @code
  *  NSAttributedString *result = [@"string" makeString:^(BOStringMaker *make) {
  *      make.with.stringRange(^{
  *          make.font([UIFont systemFontOfSize:12]);
@@ -119,10 +122,10 @@
  *          make.backgroundColor([UIColor blueColor]);
  *      });
  *  }];
- *
+ *  @endcode
  *  All three attributes above will be applied for the whole string. This method
  *  is equivalent to the following invocation:
- *
+ *  @code
  *  NSAttributedString *result = [stringVar makeString:^(BOStringMaker *make) {
  *      make.with.range(NSMakeRange(0, [stringVar length]), ^{
  *          make.font([UIFont systemFontOfSize:12]);
@@ -130,16 +133,16 @@
  *          make.backgroundColor([UIColor blueColor]);
  *      });
  *  }];
- *
+ *  @endcode
  *  In fact, by default all attributes are applied to the whole string, so if 
  *  you want a shorter code, you can write something like this:
- *
+ *  @code
  *  NSAttributedString *result = [stringVar makeString:^(BOStringMaker *make) {
  *      make.font([UIFont systemFontOfSize:12]);
  *      make.foregroundColor([UIColor greenColor]);
  *      make.backgroundColor([UIColor blueColor]);
  *  }];
- *
+ *  @endcode
  *  However for the sake of readability, you still might want to use this method.
  *
  *  @see BOStringAttribute to learn more of attributes application range.
@@ -151,7 +154,7 @@
  *  attributes to a first found substring.
  *
  *  Example:
- *
+ *  @code
  *  NSAttributedString *result = [@"abababa" makeString:^(BOStringMaker *make) {
  *      make.first.substring(@"a", ^{
  *          make.font([UIFont systemFontOfSize:12]);
@@ -159,7 +162,7 @@
  *          make.backgroundColor([UIColor blueColor]);
  *      });
  *  }];
- *
+ *  @endcode
  *  @return `self`. After invoking this method, you *must* invoke `substring`.
  */
 - (instancetype)first;
@@ -169,7 +172,7 @@
  *  attributes to each found substring.
  *
  *  Example:
- *
+ *  @code
  *  NSAttributedString *result = [@"abababa" makeString:^(BOStringMaker *make) {
  *      make.each.substring(@"a", ^{
  *          make.font([UIFont systemFontOfSize:12]);
@@ -177,7 +180,7 @@
  *          make.backgroundColor([UIColor blueColor]);
  *      });
  *  }];
- *
+ *  @endcode
  *  @return `self`. After invoking this method, you *must* invoke `substring`.
  */
 - (instancetype)each;
@@ -187,7 +190,7 @@
  *  described in `first` and `each` methods.
  *
  *  Example:
- *
+ *  @code
  *  NSAttributedString *result = [@"abababa" makeString:^(BOStringMaker *make) {
  *      make.each.substring(@"a", ^{
  *          make.backgroundColor([UIColor blueColor]);
@@ -196,6 +199,7 @@
  *          make.foregoundColor([UIColor greenColor]);
  *      });
  *  }];
+ *  @endcode
  */
 - (void(^)(NSString *, void (^)(void)))substring;
 
@@ -204,11 +208,11 @@
  *
  *  @returns BOStringAttribute instance, in case if you want to change 
  *  attribute's range:
- *
+ *  @code
  *  NSAttributedString *result = [stringVar makeString:^(BOStringMaker *make) {
  *      make.font([UIFont fontOfSize:12]).with.range(NSMakeRange(0, 5));
  *  }];
- *
+ *  @endcode
  *  @see BOStringAttribute for more information.
  */
 - (BOStringAttribute *(^)(BOSFont *))font;

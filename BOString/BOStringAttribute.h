@@ -34,13 +34,13 @@
 /**
  *  Semantic filler. Does nothing, just returns self. May be helpful in case if
  *  range needs to be changed:
- *
+ *  @code
  *      make.foregroundColor([UIColor blueColor]).with.range(NSMakeRange(1, 2));
- *
+ *  @endcode
  *  however, this code is equivalent to a bit shorter form:
- *
+ *  @code
  *      make.foregroundColor([UIColor blueColor]).range(NSMakeRange(1, 2));
- *
+ *  @endcode
  *  which is a bit less human readable.
  *
  *  @return `self`
@@ -52,8 +52,9 @@
 - (BOStringAttribute *(^)(NSRange))range;
 /**
  *  Sets range of the attribute to whole string. Equivalent:
- *
+ *  @code
  *      range(NSMakeRange(0, self.stringLength));
+ *  @endcode
  */
 - (void(^)())stringRange;
 
