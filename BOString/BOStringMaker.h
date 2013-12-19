@@ -36,22 +36,24 @@
  *
  *  - it maps array of `BOStringAttribute` objects into a dictionary:  
  *  @code
- *      @{NSRange => @[@{attribute name => attribute value}, ...], ...}
+ *  @{NSRange => @[@{attribute name => attribute value}, ...], ...}
  *  @endcode
  *      in this example `attribute name` is an NSAttributedString attribute name
  *      i.e. NSFontAttributeName, `attribute value` is it's value, i.e. UIFont
  *      instance.
+ *
  *  - it sorts all the attributes by their NSRanges, so that ranges with the
  *      same start indexes and longer length have priority over the ones with a
  *      shorter range.
+ *
  *  - it applies all attributes with 
  *      [NSMutableAttributedString addAttributes:range:]` method.
  *
  *  With this algorithm attributes are applied from left to right, so in case if
  *  you write something like:
  *  @code
- *      make.foregroundColor([UIColor blueColor]).range(NSMakeRange(1, 2));
- *      make.foregroundColor([UIColor redColor]).stringRange();
+ *  make.foregroundColor([UIColor blueColor]).range(NSMakeRange(1, 2));
+ *  make.foregroundColor([UIColor redColor]).stringRange();
  *  @endcode
  *  it makes sure that `redColor` will be applied first and `blueColor` second.
  */
