@@ -3,7 +3,7 @@
 //  BOStringDemo
 //
 //  Created by Pavel Mazurin on 12/12/13.
-//  Copyright (c) 2013 Home. All rights reserved.
+//  Copyright (c) 2013 Pavel Mazurin. All rights reserved.
 //
 
 #import "BOStringDemoViewController.h"
