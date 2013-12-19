@@ -1,3 +1,7 @@
+v0.0.4
+========
+- documentation
+
 v0.0.3
 ========
 - support for OS X attributes
