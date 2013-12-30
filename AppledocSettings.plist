@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist
+  PUBLIC '-//Apple//DTD PLIST 1.0//EN'
+  'http://www.apple.com/DTDs/PropertyList-1.0.dtd'>
+<plist version="1.0">
+    <dict>
+        <key>--company-id</key>
+        <string>ru.kovpas</string>
+        <key>--output</key>
+        <string>Docs</string>
+        <key>--project-company</key>
+        <string>Pavel Mazurin</string>
+        <key>--project-name</key>
+        <string>BOString</string>
+        <key>--project-version</key>
+        <string>0.0.4</string>
+        <key>--create-html</key>
+        <true/>
+        <key>--create-docset</key>
+        <false/>
+        <key>--clean-output</key>
+        <false/>
+        <key>--keep-intermediate-files</key>
+        <false/>
+        <key>--keep-undocumented-objects</key>
+        <true/>
+        <key>--keep-undocumented-members</key>
+        <true/>
+        <key>--search-undocumented-doc</key>
+        <true/>
+        <key>--explicit-crossref</key>
+        <true/>
+        <key>--ignore</key>
+        <array>
+                <string>.m</string>
+                <string>Examples</string>
+                <string>Pods</string>
+                <string>Tests</string>
+        </array>
+        <key>--include</key>
+        <string>BOString</string>
+    </dict>
+</plist>

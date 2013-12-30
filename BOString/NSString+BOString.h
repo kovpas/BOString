@@ -11,7 +11,7 @@
 @class BOStringMaker;
 
 /**
- *  Helper category, which allows to avoid manual creation of `BOStringMaker`.
+ *  Helper category, which allows to avoid manual creation of <BOStringMaker>.
  *  It allows to make `NSAttributedString` instance with initial `NSString` 
  *  object and a maker block.
  *
@@ -22,7 +22,7 @@
 /**
  *  Creates `NSAttributedString` instance with a given maker block.
  *
- *  @param block A list of instructions for `BOStringMaker`.
+ *  @param block A list of instructions for <BOStringMaker>.
  *
  *  @return An `NSAttributedString` instance with attributes added 
  *  from _block_.
