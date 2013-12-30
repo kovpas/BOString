@@ -33,7 +33,7 @@ BOString
 So, based on masonry syntax, I decided to create a similar framework, which will take away some pain of creating NSAttributedString:
 
 ````
-NSMutableAttributedString *attributedString = [@"Test attributed string" makeString:^(BOStringMaker *make) {
+NSMutableAttributedString *attributedString = [@"Test attributed string" bos_makeString:^(BOStringMaker *make) {
     make.foregroundColor([UIColor greenColor]);
     make.font([fnt fontWithSize:20]);
 
@@ -57,7 +57,7 @@ NSMutableAttributedString *attributedString = [@"Test attributed string" makeStr
 }];
 ````
 
-What attributes BOString supports? In fact, it supports all of them:
+Which attributes BOString supports? In fact, it supports all of them:
 
 ````
 font;
@@ -101,8 +101,8 @@ make.with.range(NSMakeRange(6, 9), ^{
 or set range for a specific attribute (`with` is an optional semantic filler):
 
 ````
-    make.foregroundColor([UIColor blueColor]).with.range(NSRange(6, 9));
-    make.font([fnt2 fontWithSize:30]).range(NSRange(6, 9));
+make.foregroundColor([UIColor blueColor]).with.range(NSRange(6, 9));
+make.font([fnt2 fontWithSize:30]).range(NSRange(6, 9));
 ````
 
 If you don't specify range, full range of string will be used.
@@ -113,7 +113,7 @@ Even more than just an NSAttributedString maker!
 A couple of substring attribute setters. Set attributes for a first substring found:
 
 ````
-NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.first.substring(@"is", ^{
         make.foregroundColor([UIColor greenColor]);
     });
@@ -123,7 +123,7 @@ NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *ma
 or highlight every substring:
 
 ````
-NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.each.substring(@"is", ^{
         make.foregroundColor([UIColor greenColor]);
     });
@@ -133,7 +133,7 @@ NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *ma
 You can also apply attributes using regular expressions:
 
 ````
-NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.each.regexpMatch(@"\\ws", NSRegularExpressionCaseInsensitive, ^{
         make.foregroundColor([UIColor greenColor]);
     });
@@ -143,12 +143,17 @@ NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *ma
 Or regular expressions with groups matching:
 
 ````
-NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.first.regexpGroup(@"[^h](i\\w)\\s(\\w*)", NSRegularExpressionCaseInsensitive, ^{
         make.foregroundColor([UIColor greenColor]);
     });
 }];
 ````
+
+Shorthand
+=======
+
+In order to avoid conflicts with any other frameworks, `bos_` prefix is used for category methods. However shorthand methods without this prefix could be used if you add `#define BOS_SHORTHAND` before `#import "BOString.h"`.
 
 Documentation
 =======
