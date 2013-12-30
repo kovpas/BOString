@@ -1,4 +1,9 @@
-v0.0.4
+v0.0.6
+========
+- regexp matching methods
+- prefix 'bos_' for makeString category methods
+
+v0.0.4, v0.0.5
 ========
 - documentation
 

@@ -1,10 +1,10 @@
 Pod::Spec.new do |s|
   s.name         = "BOString"
-  s.version      = "0.0.5"
+  s.version      = "0.0.6"
   s.summary      = "Create NSAttributedString like a boss!"
   s.homepage     = "https://github.com/kovpas/BOString"
   s.author       = { "Pavel Mazurin" => "kovpas@gmail.com" }
-  s.source       = { :git => "https://github.com/kovpas/BOString.git", :tag => "0.0.5" }
+  s.source       = { :git => "https://github.com/kovpas/BOString.git", :tag => s.version.to_s }
   s.license      = 'MIT'
   s.source_files = 'BOString/*.{h,m}'
 

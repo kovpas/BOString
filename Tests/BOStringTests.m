@@ -7,6 +7,7 @@
 //
 
 #define EXP_SHORTHAND
+#define BOS_SHORTHAND
 
 #import "BOString.h"
 #import <Specta/Specta.h>
@@ -543,17 +544,87 @@ describe(@"Substring should highlight", ^{
         
         expect(result).to.equal(testAttributedString);
     });
+
     it(@"all instances", ^{
         NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
             make.each.substring(@"is", ^{
                 make.foregroundColor([BOSColor greenColor]);
             });
         }];
-        
+
         NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
         [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(2, 2)];
         [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(5, 2)];
+
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it(@"first regexp match", ^{
+        NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
+            make.first.regexpMatch(@"\\wy", 0, ^{ // should highlight `my`
+                make.foregroundColor([BOSColor greenColor]);
+            });
+        }];
+
+        NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(8, 2)];
         
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it(@"all regexp matches", ^{
+        NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
+            make.each.regexpMatch(@"i\\w", 0, ^{ // should highlight `Th_is_ _is_ my str_in_g`
+                make.foregroundColor([BOSColor greenColor]);
+            });
+        }];
+
+        NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(2, 2)];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(5, 2)];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(14, 2)];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it(@"first regexp group", ^{
+        NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
+            make.first.regexpGroup(@"\\s(i\\w)\\s", 0, ^{ // should highlight `This _is_ my string`
+                make.foregroundColor([BOSColor greenColor]);
+            });
+        }];
+
+        NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(5, 2)];
+
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it(@"first regexp multiple groups", ^{
+        NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
+            make.first.regexpGroup(@"\\s(i\\w)\\s(\\w{2})\\s", 0, ^{ // should highlight `This _is_ _my_ string`
+                make.foregroundColor([BOSColor greenColor]);
+            });
+        }];
+
+        NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(5, 2)];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(8, 2)];
+        
+        expect(result).to.equal(testAttributedString);
+    });
+
+    it(@"all regexp groups", ^{
+        NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
+            make.each.regexpGroup(@"[^h](i\\w)", 0, ^{ // should highlight `This _is_ my str_in_g`
+                make.foregroundColor([BOSColor greenColor]);
+            });
+        }];
+
+        NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(5, 2)];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(14, 2)];
+
         expect(result).to.equal(testAttributedString);
     });
 });

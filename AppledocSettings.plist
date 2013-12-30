@@ -13,7 +13,7 @@
         <key>--project-name</key>
         <string>BOString</string>
         <key>--project-version</key>
-        <string>0.0.5</string>
+        <string>0.0.6</string>
         <key>--create-html</key>
         <true/>
         <key>--create-docset</key>

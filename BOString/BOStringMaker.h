@@ -207,7 +207,7 @@
  *  described in `first` and `each` methods.
  *
  *  Example:
- *  
+ *
  *	NSAttributedString *result = [@"abababa" makeString:^(BOStringMaker *make) {
  *	    make.each.substring(@"a", ^{
  *	        make.backgroundColor([UIColor blueColor]);
@@ -218,6 +218,40 @@
  *	}];
  */
 - (void(^)(NSString *, void (^)(void)))substring;
+
+/**
+ *  Method which applies certain attributes to regexp matches according to rules,
+ *  described in `first` and `each` methods.
+ *
+ *  Example:
+ *
+ *	NSAttributedString *result = [@"aab ab ab" makeString:^(BOStringMaker *make) {
+ *	    make.each.regexpMatch(@"\\w{2}", NSRegularExpressionCaseInsensitive, ^{
+ *	        make.backgroundColor([UIColor blueColor]);
+ *	    });
+ *	    make.first.regexpMatch(@"a[^b]", 0, ^{
+ *	        make.foregoundColor([UIColor greenColor]);
+ *	    });
+ *	}];
+ */
+- (void(^)(NSString *, NSRegularExpressionOptions, void (^)(void)))regexpMatch;
+
+/**
+ *  Method which applies certain attributes to regexp matching groups according 
+ *  to rules, described in `first` and `each` methods.
+ *
+ *  Example:
+ *
+ *	NSAttributedString *result = [@"aab ab ab" makeString:^(BOStringMaker *make) {
+ *	    make.each.regexpGroup(@"\\s(a\\w)", NSRegularExpressionCaseInsensitive, ^{
+ *	        make.backgroundColor([UIColor blueColor]);
+ *	    });
+ *	    make.first.regexpGroup(@"a(ab)", 0, ^{
+ *	        make.foregoundColor([UIColor greenColor]);
+ *	    });
+ *	}];
+ */
+- (void(^)(NSString *, NSRegularExpressionOptions, void (^)(void)))regexpGroup;
 
 /**
  * @name Attributes

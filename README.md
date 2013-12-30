@@ -130,6 +130,26 @@ NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *ma
 }];
 ````
 
+You can also apply attributes using regular expressions:
+
+````
+NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+    make.each.regexpMatch(@"\\ws", NSRegularExpressionCaseInsensitive, ^{
+        make.foregroundColor([UIColor greenColor]);
+    });
+}];
+````
+
+Or regular expressions with groups matching:
+
+````
+NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+    make.first.regexpGroup(@"[^h](i\\w)\\s(\\w*)", NSRegularExpressionCaseInsensitive, ^{
+        make.foregroundColor([UIColor greenColor]);
+    });
+}];
+````
+
 Documentation
 =======
 

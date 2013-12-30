@@ -11,7 +11,7 @@
 
 @implementation NSString (BOString)
 
-- (NSAttributedString *)makeString:(void(^)(BOStringMaker *make))block
+- (NSAttributedString *)bos_makeString:(void(^)(BOStringMaker *make))block
 {
     BOStringMaker *stringMaker = [[BOStringMaker alloc] initWithString:self];
     if (block)
@@ -21,5 +21,14 @@
     
     return [stringMaker makeString];
 }
+
+#ifdef BOS_SHORTHAND
+
+- (NSAttributedString *)makeString:(void(^)(BOStringMaker *make))block
+{
+	return [self bos_makeString:block];
+}
+
+#endif // BOS_SHORTHAND
 
 @end

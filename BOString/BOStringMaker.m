@@ -165,6 +165,51 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
+- (void(^)(NSString *, NSRegularExpressionOptions, void (^)(void)))regexpMatch
+{
+    NSAssert(_stringCommand != BOStringMakerUndefinedStringCommand, @"Please provide correct instruction before regexp command. I.e. make.each.regexpMatch(...) or make.first.regexpMatch(...)");
+    return ^(NSString *pattern, NSRegularExpressionOptions options, void (^attrbutes)(void)){
+        NSError *error = nil;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                               options:options
+                                                                                 error:&error];
+        NSString *string = [_attributedString string];
+        BOOL matchFirstOnly = (_stringCommand == BOStringMakerFirstStringCommand);
+        _stringCommand = BOStringMakerUndefinedStringCommand;
+        [regex enumerateMatchesInString:string
+                                options:0
+                                  range:NSMakeRange(0, [string length])
+                             usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+                                 self.range(result.range, attrbutes);
+                                 *stop = matchFirstOnly;
+                             }];
+    };
+}
+
+- (void(^)(NSString *, NSRegularExpressionOptions, void (^)(void)))regexpGroup
+{
+    NSAssert(_stringCommand != BOStringMakerUndefinedStringCommand, @"Please provide correct instruction before regexp command. I.e. make.each.regexpGroup(...) or make.first.regexpGroup(...)");
+    return ^(NSString *pattern, NSRegularExpressionOptions options, void (^attrbutes)(void)){
+        NSError *error = nil;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                               options:options
+                                                                                 error:&error];
+        NSString *string = [_attributedString string];
+        BOOL matchFirstOnly = (_stringCommand == BOStringMakerFirstStringCommand);
+        _stringCommand = BOStringMakerUndefinedStringCommand;
+        [regex enumerateMatchesInString:string
+                                options:0
+                                  range:NSMakeRange(0, [string length])
+                             usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+                                 for (NSUInteger i = 1; i < [result numberOfRanges]; i++)
+                                 {
+                                     self.range([result rangeAtIndex:i], attrbutes);
+                                 }
+                                 *stop = matchFirstOnly;
+                             }];
+    };
+}
+
 - (void(^)(void (^)(void)))stringRange
 {
     return ^(void (^rangeAttributes)(void)) {

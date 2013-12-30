@@ -27,6 +27,15 @@
  *  @return An `NSAttributedString` instance with attributes added 
  *  from _block_.
  */
+- (NSAttributedString *)bos_makeString:(void(^)(BOStringMaker *make))block;
+
+#ifdef BOS_SHORTHAND
+
+/**
+ *  Shorthand method for bos_makeString:.
+ */
 - (NSAttributedString *)makeString:(void(^)(BOStringMaker *make))block;
+
+#endif // BOS_SHORTHAND
 
 @end
