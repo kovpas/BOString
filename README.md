@@ -130,6 +130,11 @@ NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *ma
 }];
 ````
 
+Documentation
+=======
+
+Documentation in HTML is available [here](http://kovpas.github.io/BOString) or on [cocoadocs.org](http://cocoadocs.org/docsets/BOString).
+
 Supported platforms
 =======
 
