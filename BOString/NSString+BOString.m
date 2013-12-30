@@ -22,13 +22,4 @@
     return [stringMaker makeString];
 }
 
-#ifdef BOS_SHORTHAND
-
-- (NSAttributedString *)makeString:(void(^)(BOStringMaker *make))block
-{
-	return [self bos_makeString:block];
-}
-
-#endif // BOS_SHORTHAND
-
 @end

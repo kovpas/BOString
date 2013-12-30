@@ -29,18 +29,28 @@
  */
 - (NSAttributedString *)bos_makeString:(void(^)(BOStringMaker *make))block;
 
-#ifdef BOS_SHORTHAND
+@end
 
+#ifdef BOS_SHORTHAND
+@interface NSString (BOStringShorthand)
 /**
  *  Shorthand method for bos_makeString:.
  *
  *  @param block A list of instructions for <BOStringMaker>.
  *
- *  @return An `NSAttributedString` instance with attributes added 
+ *  @return An `NSAttributedString` instance with attributes added
  *  from _block_.
  */
 - (NSAttributedString *)makeString:(void(^)(BOStringMaker *make))block;
-
-#endif // BOS_SHORTHAND
-
 @end
+
+#ifndef BOS_NSSTRING_SHORTHAND
+#define BOS_NSSTRING_SHORTHAND
+@implementation NSString (BOStringShorthand)
+- (NSAttributedString *)makeString:(void(^)(BOStringMaker *make))block
+{
+	return [self bos_makeString:block];
+}
+@end
+#endif // BOS_NSSTRING_SHORTHAND
+#endif // BOS_SHORTHAND

@@ -10,7 +10,6 @@
 		201DF0EB185A098100062FB4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 201DF0EA185A098100062FB4 /* Cocoa.framework */; };
 		201DF0F5185A098100062FB4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 201DF0F3185A098100062FB4 /* InfoPlist.strings */; };
 		201DF0F7185A098100062FB4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 201DF0F6185A098100062FB4 /* main.m */; };
-		201DF0FB185A098100062FB4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 201DF0F9185A098100062FB4 /* Credits.rtf */; };
 		201DF0FE185A098100062FB4 /* BOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 201DF0FD185A098100062FB4 /* BOSAppDelegate.m */; };
 		201DF101185A098100062FB4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 201DF0FF185A098100062FB4 /* MainMenu.xib */; };
 		201DF103185A098100062FB4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 201DF102185A098100062FB4 /* Images.xcassets */; };
@@ -66,7 +65,6 @@
 		201DF0F4185A098100062FB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		201DF0F6185A098100062FB4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		201DF0F8185A098100062FB4 /* BOStringDemo_OSX-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BOStringDemo_OSX-Prefix.pch"; sourceTree = "<group>"; };
-		201DF0FA185A098100062FB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		201DF0FC185A098100062FB4 /* BOSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BOSAppDelegate.h; sourceTree = "<group>"; };
 		201DF0FD185A098100062FB4 /* BOSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BOSAppDelegate.m; sourceTree = "<group>"; };
 		201DF100185A098100062FB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 				201DF0F3185A098100062FB4 /* InfoPlist.strings */,
 				201DF0F6185A098100062FB4 /* main.m */,
 				201DF0F8185A098100062FB4 /* BOStringDemo_OSX-Prefix.pch */,
-				201DF0F9185A098100062FB4 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -437,7 +434,6 @@
 			files = (
 				201DF0F5185A098100062FB4 /* InfoPlist.strings in Resources */,
 				201DF103185A098100062FB4 /* Images.xcassets in Resources */,
-				201DF0FB185A098100062FB4 /* Credits.rtf in Resources */,
 				201DF101185A098100062FB4 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -651,14 +647,6 @@
 				201DF0F4185A098100062FB4 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		201DF0F9185A098100062FB4 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				201DF0FA185A098100062FB4 /* en */,
-			);
-			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
 		201DF0FF185A098100062FB4 /* MainMenu.xib */ = {
