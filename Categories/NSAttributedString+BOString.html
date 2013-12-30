@@ -43,6 +43,8 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
+	<option value="//api/name/bos_makeString:">&nbsp;&nbsp;&nbsp;&nbsp;- bos_makeString:</option>
+	
 	<option value="//api/name/makeString:">&nbsp;&nbsp;&nbsp;&nbsp;- makeString:</option>
 	
 	
@@ -72,6 +74,8 @@
 
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/bos_makeString:">bos_makeString:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/makeString:">makeString:</a></span></li>
 	
@@ -129,6 +133,12 @@ It allows to make <code>NSAttributedString</code> instance with initial
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
+		<code><a href="#//api/name/bos_makeString:">&ndash;&nbsp;bos_makeString:</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
 		<code><a href="#//api/name/makeString:">&ndash;&nbsp;makeString:</a></code>
 	</span>
 	
@@ -151,8 +161,8 @@ It allows to make <code>NSAttributedString</code> instance with initial
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/makeString:" title="makeString:"></a>
-	<h3 class="subsubtitle method-title">makeString:</h3>
+	<a name="//api/name/bos_makeString:" title="bos_makeString:"></a>
+	<h3 class="subsubtitle method-title">bos_makeString:</h3>
 	
 	
 	
@@ -162,7 +172,7 @@ It allows to make <code>NSAttributedString</code> instance with initial
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (NSAttributedString *)makeString:(void ( ^ ) ( BOStringMaker *make ))<em>block</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (NSAttributedString *)bos_makeString:(void ( ^ ) ( BOStringMaker *make ))<em>block</em></code></div>
 
     
 	
@@ -193,6 +203,63 @@ re-written.</p>
 	<div class="method-subsection discussion-section">
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>Creates <code>NSAttributedString</code> instance with a given maker block.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">NSAttributedString+BOString.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/makeString:" title="makeString:"></a>
+	<h3 class="subsubtitle method-title">makeString:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Shorthand method for bos_makeString:.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSAttributedString *)makeString:(void ( ^ ) ( BOStringMaker *make ))<em>block</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>block</em></dt>
+			<dd><p>A list of instructions for <a href="../Classes/BOStringMaker.html">BOStringMaker</a>.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>An <code>NSAttributedString</code> instance with attributes added
+from <em>block</em>.</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Shorthand method for bos_makeString:.</p>
 	</div>
 	
 	

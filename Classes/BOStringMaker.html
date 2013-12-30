@@ -85,6 +85,10 @@
 	
 	<option value="//api/name/range">&nbsp;&nbsp;&nbsp;&nbsp;- range</option>
 	
+	<option value="//api/name/regexpGroup">&nbsp;&nbsp;&nbsp;&nbsp;- regexpGroup</option>
+	
+	<option value="//api/name/regexpMatch">&nbsp;&nbsp;&nbsp;&nbsp;- regexpMatch</option>
+	
 	<option value="//api/name/shadow">&nbsp;&nbsp;&nbsp;&nbsp;- shadow</option>
 	
 	<option value="//api/name/strikethroughColor">&nbsp;&nbsp;&nbsp;&nbsp;- strikethroughColor</option>
@@ -196,6 +200,10 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/paragraphStyle">paragraphStyle</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/range">range</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/regexpGroup">regexpGroup</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/regexpMatch">regexpMatch</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/shadow">shadow</a></span></li>
 	
@@ -401,6 +409,18 @@ make.foregroundColor([UIColor redColor]).stringRange();
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/substring">&ndash;&nbsp;substring</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/regexpMatch">&ndash;&nbsp;regexpMatch</a></code>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/regexpGroup">&ndash;&nbsp;regexpGroup</a></code>
 	</span>
 	
 	
@@ -1788,6 +1808,116 @@ passed to that block.</p>
 </code></pre>
 
 <p>All three attributes above will be applied for the range <code>(0, 5)</code>.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">BOStringMaker.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/regexpGroup" title="regexpGroup"></a>
+	<h3 class="subsubtitle method-title">regexpGroup</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method which applies certain attributes to regexp matching groups according
+to rules, described in <code>first</code> and <code>each</code> methods.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void ( ^ ) ( NSString *, NSRegularExpressionOptions , void ( ^ ) ( void ) ))regexpGroup</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Method which applies certain attributes to regexp matching groups according
+to rules, described in <code>first</code> and <code>each</code> methods.</p>
+
+<p>Example:</p>
+
+<pre><code>NSAttributedString *result = [@"aab ab ab" makeString:^(BOStringMaker *make) {
+    make.each.regexpGroup(@"\\s(a\\w)", NSRegularExpressionCaseInsensitive, ^{
+        make.backgroundColor([UIColor blueColor]);
+    });
+    make.first.regexpGroup(@"a(ab)", 0, ^{
+        make.foregoundColor([UIColor greenColor]);
+    });
+}];
+</code></pre>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">BOStringMaker.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/regexpMatch" title="regexpMatch"></a>
+	<h3 class="subsubtitle method-title">regexpMatch</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method which applies certain attributes to regexp matches according to rules,
+described in <code>first</code> and <code>each</code> methods.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void ( ^ ) ( NSString *, NSRegularExpressionOptions , void ( ^ ) ( void ) ))regexpMatch</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Method which applies certain attributes to regexp matches according to rules,
+described in <code>first</code> and <code>each</code> methods.</p>
+
+<p>Example:</p>
+
+<pre><code>NSAttributedString *result = [@"aab ab ab" makeString:^(BOStringMaker *make) {
+    make.each.regexpMatch(@"\\w{2}", NSRegularExpressionCaseInsensitive, ^{
+        make.backgroundColor([UIColor blueColor]);
+    });
+    make.first.regexpMatch(@"a[^b]", 0, ^{
+        make.foregoundColor([UIColor greenColor]);
+    });
+}];
+</code></pre>
 	</div>
 	
 	
