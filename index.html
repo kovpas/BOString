@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Bostring by kovpas</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Bostring</h1>
+          <h2>Create NSAttributedString like a boss!</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/kovpas/BOString/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/kovpas/BOString/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/kovpas/BOString" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="nsattributedstring" class="anchor" href="#nsattributedstring"><span class="octicon octicon-link"></span></a>NSAttributedString  <a href="https://travis-ci.org/kovpas/BOString"><img src="https://travis-ci.org/kovpas/BOString.png?branch=develop" alt="Build Status"></a>
+</h1>
+
+<p>It's not a secret that NSAttributedString API is far from perfect. Based on NSDictionary, it looks ugly, counter-OOP and hard to maintain...</p>
+
+<pre><code>NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Test attributed string" attributes:@{NSForegroundColorAttributeName: [UIColor greenColor], NSFontAttributeName: [fnt fontWithSize:20]}];
+[attributedString addAttributes:@{NSForegroundColorAttributeName: [UIColor redColor]
+                                  , NSFontAttributeName: [fnt2 fontWithSize:10]
+                                  , NSLigatureAttributeName: @2
+                                  , NSBaselineOffsetAttributeName: @1}
+                          range:NSMakeRange(3, 5)];
+[attributedString addAttributes:@{NSForegroundColorAttributeName: [UIColor blueColor]
+                                  , NSFontAttributeName: [fnt2 fontWithSize:30]}
+                          range:NSMakeRange(6, 9)];
+[attributedString addAttributes:@{NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle)
+                                  , NSStrikethroughColorAttributeName: [UIColor redColor]
+                                  , NSBackgroundColorAttributeName: [UIColor yellowColor]}
+                          range:NSMakeRange(7, 4)];
+_attributedTextView2.attributedText = attributedString;
+</code></pre>
+
+<p>Some developers get really desperate and write tools like <a href="https://itunes.apple.com/us/app/attributed-string-creator/id730928349?mt=12">this</a>... Which again proves that NSAttributedString API is far from perfect.</p>
+
+<h1>
+<a name="masonry" class="anchor" href="#masonry"><span class="octicon octicon-link"></span></a>Masonry</h1>
+
+<p>I love <a href="https://github.com/cloudkite/Masonry">masonry</a>. I love its clarity, its syntax. If you are using autolayout in your project and still write constraints using NSLayoutConstraint API, you should definitely take a look at masonry. Clear and very brief syntax makes code much more human readable, easy to maintain and modify.</p>
+
+<h1>
+<a name="bostring" class="anchor" href="#bostring"><span class="octicon octicon-link"></span></a>BOString</h1>
+
+<p>So, based on masonry syntax, I decided to create a similar framework, which will take away some pain of creating NSAttributedString:</p>
+
+<pre><code>NSMutableAttributedString *attributedString = [@"Test attributed string" makeString:^(BOStringMaker *make) {
+    make.foregroundColor([UIColor greenColor]);
+    make.font([fnt fontWithSize:20]);
+
+    make.with.range(NSMakeRange(3, 5), ^{
+        make.foregroundColor([UIColor redColor]);
+        make.font([fnt2 fontWithSize:10]);
+        make.ligature(@2);
+        make.baselineOffset(@1);
+    });
+
+    make.with.range(NSMakeRange(6, 9), ^{
+        make.foregroundColor([UIColor blueColor]);
+        make.font([fnt2 fontWithSize:30]);
+    });
+
+    make.with.range(NSMakeRange(7, 4), ^{
+        make.strikethroughStyle(@(NSUnderlineStyleSingle));
+        make.strikethroughColor([UIColor redColor]);
+        make.backgroundColor([UIColor yellowColor]);
+    });
+}];
+</code></pre>
+
+<p>What attributes BOString supports? In fact, it supports all of them:</p>
+
+<pre><code>font;
+paragraphStyle;
+foregroundColor;
+backgroundColor;
+ligature;
+kern;
+strikethroughStyle;
+underlineStyle;
+strokeColor;
+strokeWidth;
+shadow;
+textEffect;           // iOS only
+attachment;
+link;
+baselineOffset;
+underlineColor;
+strikethroughColor;
+obliqueness;
+expansion;
+writingDirection;
+verticalGlyphForm;
+superscript;          // OS X only
+cursor;               // OS X only
+toolTip;              // OS X only
+characterShape;       // OS X only
+glyphInfo;            // OS X only
+markedClauseSegment;  // OS X only
+textAlternatives;     // OS X only
+</code></pre>
+
+<p>While making a string you can specify ranges for attributes either with a block-based syntax as in the example above:</p>
+
+<pre><code>make.with.range(NSMakeRange(6, 9), ^{
+    make.foregroundColor([UIColor blueColor]);
+    make.font([fnt2 fontWithSize:30]);
+});
+</code></pre>
+
+<p>or set range for a specific attribute (<code>with</code> is an optional semantic filler):</p>
+
+<pre><code>    make.foregroundColor([UIColor blueColor]).with.range(NSRange(6, 9));
+    make.font([fnt2 fontWithSize:30]).range(NSRange(6, 9));
+</code></pre>
+
+<p>If you don't specify range, full range of string will be used.</p>
+
+<h1>
+<a name="even-more-than-just-an-nsattributedstring-maker" class="anchor" href="#even-more-than-just-an-nsattributedstring-maker"><span class="octicon octicon-link"></span></a>Even more than just an NSAttributedString maker!</h1>
+
+<p>A couple of substring attribute setters. Set attributes for a first substring found:</p>
+
+<pre><code>NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+    make.first.substring(@"is", ^{
+        make.foregroundColor([UIColor greenColor]);
+    });
+}];
+</code></pre>
+
+<p>or highlight every substring:</p>
+
+<pre><code>NSAttributedString *result = [@"This is a string" makeString:^(BOStringMaker *make) {
+    make.each.substring(@"is", ^{
+        make.foregroundColor([UIColor greenColor]);
+    });
+}];
+</code></pre>
+
+<h1>
+<a name="supported-platforms" class="anchor" href="#supported-platforms"><span class="octicon octicon-link"></span></a>Supported platforms</h1>
+
+<ul>
+<li>
+<strong>iOS 6.0</strong> and later.</li>
+<li>
+<strong>OS X Mavericks (10.9)</strong> and later.</li>
+</ul><p>Should work fine on iOS 4.3+ and OS X 10.5+ (except of several attributes), but I haven't had a chance to test it.</p>
+
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>The easiest way is to use CocoaPods:</p>
+
+<p>In your Podfile</p>
+
+<p><code>pod 'BOString'</code></p>
+
+<p>and import it in a file you want to make strings like a boss:</p>
+
+<p><code>#import "Bostring.h"</code></p>
+
+<h1>
+<a name="contribution" class="anchor" href="#contribution"><span class="octicon octicon-link"></span></a>Contribution</h1>
+
+<p>Feel free to submit pull requests into a <strong>separate</strong> branch. Please don't submit pull requests to <code>master</code>.</p>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>BOString is released under the MIT License.</p>
+        </section>
+
+        <footer>
+          Bostring is maintained by <a href="https://github.com/kovpas">kovpas</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
