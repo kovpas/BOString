@@ -153,7 +153,7 @@ NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker
 Shorthand
 =======
 
-In order to avoid conflicts with any other frameworks, `bos_` prefix is used for category methods. However shorthand methods without this prefix could be used if you add `#define BOS_SHORTHAND` before `#import "BOString.h"`.
+In order to avoid conflicts with any other frameworks, `bos_` prefix is used for category methods. However shorthand methods without this prefix could be used if you add `#define BOS_SHORTHAND` in your `prefix.pch` file before importing `BOString.h`.
 
 Documentation
 =======
