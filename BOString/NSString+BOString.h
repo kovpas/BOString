@@ -33,6 +33,11 @@
 
 /**
  *  Shorthand method for bos_makeString:.
+ *
+ *  @param block A list of instructions for <BOStringMaker>.
+ *
+ *  @return An `NSAttributedString` instance with attributes added 
+ *  from _block_.
  */
 - (NSAttributedString *)makeString:(void(^)(BOStringMaker *make))block;
 
