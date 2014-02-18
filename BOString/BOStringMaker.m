@@ -319,6 +319,16 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
+#if TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
+- (BOStringAttribute *(^)(NSNumber *))verticalGlyphForm
+{
+    return ^BOStringAttribute *(NSNumber *verticalGlyphForm) {
+        return [self addAttributeWithName:NSVerticalGlyphFormAttributeName value:verticalGlyphForm];
+    };
+}
+#endif // TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
+
+#if !TARGET_OS_IPHONE || __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 #if TARGET_OS_IPHONE
 - (BOStringAttribute *(^)(NSString *))textEffect
 {
@@ -327,7 +337,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
         return [self addAttributeWithName:NSTextEffectAttributeName value:textEffect];
     };
 }
-#endif
+#endif // TARGET_OS_IPHONE
 
 - (BOStringAttribute *(^)(NSTextAttachment *))attachment
 {
@@ -386,6 +396,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
+#if TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
 - (BOStringAttribute *(^)(id))writingDirection
 {
     NSAttributeAssert(@"NSWritingDirectionAttributeName");
@@ -394,13 +405,8 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
         return [self addAttributeWithName:NSWritingDirectionAttributeName value:writingDirection];
     };
 }
-
-- (BOStringAttribute *(^)(NSNumber *))verticalGlyphForm
-{
-    return ^BOStringAttribute *(NSNumber *verticalGlyphForm) {
-        return [self addAttributeWithName:NSVerticalGlyphFormAttributeName value:verticalGlyphForm];
-    };
-}
+#endif // TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
+#endif // !TARGET_OS_IPHONE || __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 
 #if !TARGET_OS_IPHONE
 - (BOStringAttribute *(^)(NSNumber *))superscript
@@ -445,14 +451,15 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     };
 }
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
 - (BOStringAttribute *(^)(NSTextAlternatives *))textAlternatives
 {
     return ^BOStringAttribute *(NSTextAlternatives *textAlternatives) {
         return [self addAttributeWithName:NSTextAlternativesAttributeName value:textAlternatives];
     };
 }
-
-#endif
+#endif // MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
+#endif // !TARGET_OS_IPHONE
 
 
 @end

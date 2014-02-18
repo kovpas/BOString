@@ -381,8 +381,21 @@
  */
 - (BOStringAttribute *(^)(NSShadow *))shadow;
 
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
+/**
+ *  Sets `NSVerticalGlyphFormAttributeName` attribute.
+ *
+ *  @returns <BOStringAttribute> instance, in case if you want to change
+ *  attribute's range.
+ *
+ *  @see font for more information.
+ *  @see BOStringAttribute for more information.
+ */
+- (BOStringAttribute *(^)(NSNumber *))verticalGlyphForm;
+#endif // TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
 
+#if !TARGET_OS_IPHONE || __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+#if TARGET_OS_IPHONE
 /**
  *  Sets `NSTextEffectAttributeName` attribute.
  *
@@ -393,7 +406,7 @@
  *  @see BOStringAttribute for more information.
  */
 - (BOStringAttribute *(^)(NSString *))textEffect;
-#endif
+#endif // TARGET_OS_IPHONE
 
 /**
  *  Sets `NSAttachmentAttributeName` attribute.
@@ -472,6 +485,7 @@
  */
 - (BOStringAttribute *(^)(NSNumber *))expansion;
 
+#if TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
 /**
  *  Sets `NSWritingDirectionAttributeName` attribute.
  *
@@ -482,20 +496,10 @@
  *  @see BOStringAttribute for more information.
  */
 - (BOStringAttribute *(^)(id))writingDirection;
-
-/**
- *  Sets `NSVerticalGlyphFormAttributeName` attribute.
- *
- *  @returns <BOStringAttribute> instance, in case if you want to change 
- *  attribute's range.
- *
- *  @see font for more information.
- *  @see BOStringAttribute for more information.
- */
-- (BOStringAttribute *(^)(NSNumber *))verticalGlyphForm;
+#endif // TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
+#endif // !TARGET_OS_IPHONE || __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
 
 #if !TARGET_OS_IPHONE
-
 /**
  *  Sets `NSSuperscriptAttributeName` attribute.
  *
@@ -562,6 +566,7 @@
  */
 - (BOStringAttribute *(^)(NSNumber *))markedClauseSegment;
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
 /**
  *  Sets `NSTextAlternativesAttributeName` attribute.
  *
@@ -572,6 +577,7 @@
  *  @see BOStringAttribute for more information.
  */
 - (BOStringAttribute *(^)(NSTextAlternatives *))textAlternatives;
-#endif
+#endif // MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8
+#endif // !TARGET_OS_IPHONE
 
 @end
