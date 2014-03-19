@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     BOStringMakerUndefinedStringCommand = 0,
     BOStringMakerFirstStringCommand,
+    BOStringMakerLastStringCommand,
     BOStringMakerEachStringCommand
 };
 
@@ -122,6 +123,12 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     return self;
 }
 
+- (instancetype)last
+{
+    _stringCommand = BOStringMakerLastStringCommand;
+    return self;
+}
+
 - (instancetype)each
 {
     _stringCommand = BOStringMakerEachStringCommand;
@@ -137,6 +144,10 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
         switch (_stringCommand) {
             case BOStringMakerFirstStringCommand:
                 [ranges addObject:[NSValue valueWithRange:[[_attributedString string] rangeOfString:string]]];
+                break;
+            case BOStringMakerLastStringCommand:
+                [ranges addObject:[NSValue valueWithRange:[[_attributedString string] rangeOfString:string
+                                                                                            options:NSBackwardsSearch]]];
                 break;
                 
             case BOStringMakerEachStringCommand:
@@ -175,14 +186,25 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
                                                                                  error:&error];
         NSString *string = [_attributedString string];
         BOOL matchFirstOnly = (_stringCommand == BOStringMakerFirstStringCommand);
+        BOOL matchLastOnly = (_stringCommand == BOStringMakerLastStringCommand);
+        __block NSTextCheckingResult *lastResult = nil;
         _stringCommand = BOStringMakerUndefinedStringCommand;
         [regex enumerateMatchesInString:string
                                 options:0
                                   range:NSMakeRange(0, [string length])
                              usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-                                 self.range(result.range, attrbutes);
+                                 lastResult = result;
+                                 if (!matchLastOnly)
+                                 {
+                                     self.range(lastResult.range, attrbutes);
+                                 }
+
                                  *stop = matchFirstOnly;
                              }];
+        if (matchLastOnly && lastResult)
+        {
+            self.range(lastResult.range, attrbutes);
+        }
     };
 }
 
@@ -196,17 +218,30 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
                                                                                  error:&error];
         NSString *string = [_attributedString string];
         BOOL matchFirstOnly = (_stringCommand == BOStringMakerFirstStringCommand);
+        BOOL matchLastOnly = (_stringCommand == BOStringMakerLastStringCommand);
+        __block NSTextCheckingResult *lastResult = nil;
         _stringCommand = BOStringMakerUndefinedStringCommand;
         [regex enumerateMatchesInString:string
                                 options:0
                                   range:NSMakeRange(0, [string length])
                              usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-                                 for (NSUInteger i = 1; i < [result numberOfRanges]; i++)
+                                 lastResult = result;
+                                 if (!matchLastOnly)
                                  {
-                                     self.range([result rangeAtIndex:i], attrbutes);
+                                     for (NSUInteger i = 1; i < [result numberOfRanges]; i++)
+                                     {
+                                         self.range([result rangeAtIndex:i], attrbutes);
+                                     }
                                  }
                                  *stop = matchFirstOnly;
                              }];
+        if (matchLastOnly && lastResult)
+        {
+            for (NSUInteger i = 1; i < [lastResult numberOfRanges]; i++)
+            {
+                self.range([lastResult rangeAtIndex:i], attrbutes);
+            }
+        }
     };
 }
 

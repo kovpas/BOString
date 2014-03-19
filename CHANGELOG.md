@@ -1,3 +1,11 @@
+v0.0.8
+========
+- `last` command for maker. Allows to match last substring or regexp in a string.
+
+v0.0.7
+========
+- Minor fixes for ios and osx versions compatibility
+
 v0.0.6
 ========
 - regexp matching methods

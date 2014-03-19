@@ -171,7 +171,7 @@
  *  attributes to a first found substring.
  *
  *  Example:
- *  
+ *
  *	NSAttributedString *result = [@"abababa" makeString:^(BOStringMaker *make) {
  *	    make.first.substring(@"a", ^{
  *	        make.font([UIFont systemFontOfSize:12]);
@@ -179,10 +179,28 @@
  *	        make.backgroundColor([UIColor blueColor]);
  *	    });
  *	}];
- *  
+ *
  *  @return `self`. After invoking this method, you *must* call `substring`.
  */
 - (instancetype)first;
+
+/**
+ *  Helper method, used in conjunction with `substring` to apply certain
+ *  attributes to a last found substring.
+ *
+ *  Example:
+ *
+ *	NSAttributedString *result = [@"abababa" makeString:^(BOStringMaker *make) {
+ *	    make.last.substring(@"a", ^{
+ *	        make.font([UIFont systemFontOfSize:12]);
+ *	        make.foregroundColor([UIColor greenColor]);
+ *	        make.backgroundColor([UIColor blueColor]);
+ *	    });
+ *	}];
+ *
+ *  @return `self`. After invoking this method, you *must* call `substring`.
+ */
+- (instancetype)last;
 
 /**
  *  Helper method, used in conjunction with `substring` to apply certain
