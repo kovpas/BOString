@@ -278,7 +278,7 @@
 /**
  *  Sets custom attribute. It's recommended to use pre-defined methods, however
  *  some CoreText attributes are not available through them, so in that case you 
- *  might want to use this method.
+ *  can use this method.
  *
  *	NSAttributedString *result = [stringVar makeString:^(BOStringMaker *make) {
  *	    make.attribute(kCTLanguageAttributeName, @"jp");
