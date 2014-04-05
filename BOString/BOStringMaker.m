@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAssert(_stringCommand != BOStringMakerUndefinedStringCommand, @"Please provide correct instruction before substring command. I.e. make.each.substring(...) or make.first.substring(...)");
     
-    return ^(NSString *string, void (^attrbutes)(void)){
+    return ^(NSString *string, void (^attrbutes)(void)) {
         NSMutableArray *ranges = [NSMutableArray array];
         switch (_stringCommand) {
             case BOStringMakerFirstStringCommand:
@@ -179,7 +179,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 - (void(^)(NSString *, NSRegularExpressionOptions, void (^)(void)))regexpMatch
 {
     NSAssert(_stringCommand != BOStringMakerUndefinedStringCommand, @"Please provide correct instruction before regexp command. I.e. make.each.regexpMatch(...) or make.first.regexpMatch(...)");
-    return ^(NSString *pattern, NSRegularExpressionOptions options, void (^attrbutes)(void)){
+    return ^(NSString *pattern, NSRegularExpressionOptions options, void (^attrbutes)(void)) {
         NSError *error = nil;
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
                                                                                options:options
@@ -276,59 +276,66 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     return attribute;
 }
 
+- (BOStringAttribute *(^)(NSString *, id))attribute
+{
+    return ^BOStringAttribute *(NSString *attributeName, id attributeValue) {
+        return [self addAttributeWithName:attributeName value:attributeValue];
+    };
+}
+
 - (BOStringAttribute *(^)(BOSFont *))font
 {
     return ^BOStringAttribute *(BOSFont *font) {
-        return [self addAttributeWithName:NSFontAttributeName value:font];
+        return self.attribute(NSFontAttributeName, font);
     };
 }
 
 - (BOStringAttribute *(^)(NSParagraphStyle *))paragraphStyle
 {
     return ^BOStringAttribute *(NSParagraphStyle *paragraphStyle) {
-        return [self addAttributeWithName:NSParagraphStyleAttributeName value:paragraphStyle];
+        return self.attribute(NSParagraphStyleAttributeName, paragraphStyle);
     };
 }
 
 - (BOStringAttribute *(^)(BOSColor *))foregroundColor
 {
     return ^BOStringAttribute *(BOSColor *foregroundColor) {
-        return [self addAttributeWithName:NSForegroundColorAttributeName value:foregroundColor];
+        return self.attribute(NSForegroundColorAttributeName, foregroundColor);
     };
 }
 
 - (BOStringAttribute *(^)(BOSColor *))backgroundColor
 {
     return ^BOStringAttribute *(BOSColor *backgroundColor) {
-        return [self addAttributeWithName:NSBackgroundColorAttributeName value:backgroundColor];
+        return self.attribute(NSBackgroundColorAttributeName, backgroundColor);
     };
 }
 
 - (BOStringAttribute *(^)(NSNumber *))ligature
 {
     return ^BOStringAttribute *(NSNumber *ligature) {
-        return [self addAttributeWithName:NSLigatureAttributeName value:ligature];
+        return self.attribute(NSLigatureAttributeName, ligature);
     };
 }
 
 - (BOStringAttribute *(^)(NSNumber *))kern
 {
     return ^BOStringAttribute *(NSNumber *kern) {
-        return [self addAttributeWithName:NSKernAttributeName value:kern];
+        return self.attribute(NSKernAttributeName, kern);
     };
 }
 
 - (BOStringAttribute *(^)(NSNumber *))strikethroughStyle
 {
     return ^BOStringAttribute *(NSNumber *strikethroughStyle) {
-        return [self addAttributeWithName:NSStrikethroughStyleAttributeName value:strikethroughStyle];
+        return self.attribute(NSStrikethroughStyleAttributeName, strikethroughStyle);
     };
 }
 
 - (BOStringAttribute *(^)(NSNumber *))underlineStyle
 {
     return ^BOStringAttribute *(NSNumber *underlineStyle) {
-        return [self addAttributeWithName:NSUnderlineStyleAttributeName value:underlineStyle];
+        return self.attribute(NSUnderlineStyleAttributeName, underlineStyle);
     };
 }
 
@@ -336,21 +343,21 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 - (BOStringAttribute *(^)(BOSColor *))strokeColor
 {
     return ^BOStringAttribute *(BOSColor *strokeColor) {
-        return [self addAttributeWithName:NSStrokeColorAttributeName value:strokeColor];
+        return self.attribute(NSStrokeColorAttributeName, strokeColor);
     };
 }
 
 - (BOStringAttribute *(^)(NSNumber *))strokeWidth
 {
     return ^BOStringAttribute *(NSNumber *strokeWidth) {
-        return [self addAttributeWithName:NSStrokeWidthAttributeName value:strokeWidth];
+        return self.attribute(NSStrokeWidthAttributeName, strokeWidth);
     };
 }
 
 - (BOStringAttribute *(^)(NSShadow *))shadow
 {
     return ^BOStringAttribute *(NSShadow *shadow) {
-        return [self addAttributeWithName:NSShadowAttributeName value:shadow];
+        return self.attribute(NSShadowAttributeName, shadow);
     };
 }
 
@@ -358,7 +365,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 - (BOStringAttribute *(^)(NSNumber *))verticalGlyphForm
 {
     return ^BOStringAttribute *(NSNumber *verticalGlyphForm) {
-        return [self addAttributeWithName:NSVerticalGlyphFormAttributeName value:verticalGlyphForm];
+        return self.attribute(NSVerticalGlyphFormAttributeName, verticalGlyphForm);
     };
 }
 #endif // TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_7
@@ -369,7 +376,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAttributeAssert(@"NSTextEffectAttributeName");
     return ^BOStringAttribute *(NSString *textEffect) {
-        return [self addAttributeWithName:NSTextEffectAttributeName value:textEffect];
+        return self.attribute(NSTextEffectAttributeName, textEffect);
     };
 }
 #endif // TARGET_OS_IPHONE
@@ -378,7 +385,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAttributeAssert(@"NSAttachmentAttributeName");
     return ^BOStringAttribute *(NSTextAttachment *attachment) {
-        return [self addAttributeWithName:NSAttachmentAttributeName value:attachment];
+        return self.attribute(NSAttachmentAttributeName, attachment);
     };
 }
 
@@ -387,7 +394,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     NSAttributeAssert(@"NSLinkAttributeName");
     return ^BOStringAttribute *(id link) {
         NSAssert([link isKindOfClass:[NSURL class]] || [link isKindOfClass:[NSString class]], @"The value of link attribute is an NSURL object (preferred) or an NSString object.");
-        return [self addAttributeWithName:NSLinkAttributeName value:link];
+        return self.attribute(NSLinkAttributeName, link);
     };
 }
 
@@ -395,7 +402,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAttributeAssert(@"NSBaselineOffsetAttributeName");
     return ^BOStringAttribute *(NSNumber *baselineOffset) {
-        return [self addAttributeWithName:NSBaselineOffsetAttributeName value:baselineOffset];
+        return self.attribute(NSBaselineOffsetAttributeName, baselineOffset);
     };
 }
 
@@ -403,7 +410,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAttributeAssert(@"NSUnderlineColorAttributeName");
     return ^BOStringAttribute *(BOSColor *underlineColor) {
-        return [self addAttributeWithName:NSUnderlineColorAttributeName value:underlineColor];
+        return self.attribute(NSUnderlineColorAttributeName, underlineColor);
     };
 }
 
@@ -411,7 +418,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAttributeAssert(@"NSStrikethroughColorAttributeName");
     return ^BOStringAttribute *(BOSColor *strikethroughColor) {
-        return [self addAttributeWithName:NSStrikethroughColorAttributeName value:strikethroughColor];
+        return self.attribute(NSStrikethroughColorAttributeName, strikethroughColor);
     };
 }
 
@@ -419,7 +426,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAttributeAssert(@"NSObliquenessAttributeName");
     return ^BOStringAttribute *(NSNumber *obliqueness) {
-        return [self addAttributeWithName:NSObliquenessAttributeName value:obliqueness];
+        return self.attribute(NSObliquenessAttributeName, obliqueness);
     };
 }
 
@@ -427,7 +434,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 {
     NSAttributeAssert(@"NSExpansionAttributeName");
     return ^BOStringAttribute *(NSNumber *expansion) {
-        return [self addAttributeWithName:NSExpansionAttributeName value:expansion];
+        return self.attribute(NSExpansionAttributeName, expansion);
     };
 }
 
@@ -437,7 +444,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
     NSAttributeAssert(@"NSWritingDirectionAttributeName");
     return ^BOStringAttribute *(id writingDirection) {
         NSAssert([writingDirection isKindOfClass:[NSArray class]] || [writingDirection isKindOfClass:[NSNumber class]], @"The value of writingDirection attribute is an NSArray object or an NSNumber object.");
-        return [self addAttributeWithName:NSWritingDirectionAttributeName value:writingDirection];
+        return self.attribute(NSWritingDirectionAttributeName, writingDirection);
     };
 }
 #endif // TARGET_OS_IPHONE || MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6
@@ -447,42 +454,42 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 - (BOStringAttribute *(^)(NSNumber *))superscript
 {
     return ^BOStringAttribute *(NSNumber *superscript) {
-        return [self addAttributeWithName:NSSuperscriptAttributeName value:superscript];
+        return self.attribute(NSSuperscriptAttributeName, superscript);
     };
 }
 
 - (BOStringAttribute *(^)(NSCursor *))cursor
 {
     return ^BOStringAttribute *(NSCursor *cursor) {
-        return [self addAttributeWithName:NSCursorAttributeName value:cursor];
+        return self.attribute(NSCursorAttributeName, cursor);
     };
 }
 
 - (BOStringAttribute *(^)(NSString *))toolTip
 {
     return ^BOStringAttribute *(NSString *toolTip) {
-        return [self addAttributeWithName:NSToolTipAttributeName value:toolTip];
+        return self.attribute(NSToolTipAttributeName, toolTip);
     };
 }
 
 - (BOStringAttribute *(^)(NSNumber *))characterShape
 {
     return ^BOStringAttribute *(NSNumber *characterShape) {
-        return [self addAttributeWithName:NSCharacterShapeAttributeName value:characterShape];
+        return self.attribute(NSCharacterShapeAttributeName, characterShape);
     };
 }
 
 - (BOStringAttribute *(^)(NSGlyphInfo *))glyphInfo
 {
     return ^BOStringAttribute *(NSGlyphInfo *glyphInfo) {
-        return [self addAttributeWithName:NSGlyphInfoAttributeName value:glyphInfo];
+        return self.attribute(NSGlyphInfoAttributeName, glyphInfo);
     };
 }
 
 - (BOStringAttribute *(^)(NSNumber *))markedClauseSegment
 {
     return ^BOStringAttribute *(NSNumber *markedClauseSegment) {
-        return [self addAttributeWithName:NSMarkedClauseSegmentAttributeName value:markedClauseSegment];
+        return self.attribute(NSMarkedClauseSegmentAttributeName, markedClauseSegment);
     };
 }
 
@@ -490,7 +497,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
 - (BOStringAttribute *(^)(NSTextAlternatives *))textAlternatives
 {
     return ^BOStringAttribute *(NSTextAlternatives *textAlternatives) {
-        return [self addAttributeWithName:NSTextAlternativesAttributeName value:textAlternatives];
+        return self.attribute(NSTextAlternativesAttributeName, textAlternatives);
     };
 }
 #endif // MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_8

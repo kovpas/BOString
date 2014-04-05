@@ -57,7 +57,24 @@ NSMutableAttributedString *attributedString = [@"Test attributed string" bos_mak
 }];
 ````
 
-Which attributes BOString supports? In fact, it supports all of them:
+While making a string you can specify ranges for attributes either with a block-based syntax as in the example above:
+````
+make.with.range(NSMakeRange(6, 9), ^{
+    make.foregroundColor([UIColor blueColor]);
+    make.font([fnt2 fontWithSize:30]);
+});
+````
+
+or set range for a specific attribute (`with` is an optional semantic filler):
+
+````
+make.foregroundColor([UIColor blueColor]).with.range(NSRange(6, 9));
+make.font([fnt2 fontWithSize:30]).range(NSRange(6, 9));
+````
+
+If you don't specify range, full range of string will be used.
+
+Which attributes BOString supports? It supports a lot of them:
 
 ````
 font;
@@ -90,22 +107,14 @@ markedClauseSegment;  // OS X only
 textAlternatives;     // OS X only
 ````
 
-While making a string you can specify ranges for attributes either with a block-based syntax as in the example above:
-````
-make.with.range(NSMakeRange(6, 9), ^{
-    make.foregroundColor([UIColor blueColor]);
-    make.font([fnt2 fontWithSize:30]);
-});
-````
+"Wait, you forgot NSTheVeryBestAndUsefulAttribute!"
+=======
 
-or set range for a specific attribute (`with` is an optional semantic filler):
+Indeed, there are many CoreText attributes that are not defined as methods. I.e. `kCTLanguageAttributeName`, `kCTCharacterShapeAttributeName`, `kCTBaselineClassAttributeName`, etc. In this case you may use `attribute` method:
 
-````
-make.foregroundColor([UIColor blueColor]).with.range(NSRange(6, 9));
-make.font([fnt2 fontWithSize:30]).range(NSRange(6, 9));
-````
-
-If you don't specify range, full range of string will be used.
+```
+    make.attribute(kCTLanguageAttributeName, @"jp");
+```
 
 Even more than just an NSAttributedString maker!
 =======

@@ -276,6 +276,22 @@
  */
 
 /**
+ *  Sets custom attribute. It's recommended to use pre-defined methods, however
+ *  some CoreText attributes are not available through them, so in that case you 
+ *  can use this method.
+ *
+ *	NSAttributedString *result = [stringVar makeString:^(BOStringMaker *make) {
+ *	    make.attribute(kCTLanguageAttributeName, @"jp");
+ *	}];
+ *
+ *  @returns <BOStringAttribute> instance, in case if you want to change
+ *  attribute's range.
+ *
+ *  @see BOStringAttribute for more information.
+ */
+- (BOStringAttribute *(^)(NSString *, id))attribute;
+
+/**
  *  Sets `NSFontAttributeName` attribute.
  *
  *  @returns <BOStringAttribute> instance, in case if you want to change 

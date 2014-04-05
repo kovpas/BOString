@@ -317,6 +317,17 @@ describe(@"Attribute", ^{
         
         expect(result).to.equal(testAttributedString);
     });
+    
+    it (@"custom attribute should be added", ^{
+        NSNumber *testWritingDirection = @(NSWritingDirectionRightToLeft | NSTextWritingDirectionEmbedding);
+        NSAttributedString *result = [_testString makeString:^(BOStringMaker *make) {
+            make.attribute(NSWritingDirectionAttributeName, testWritingDirection);
+        }];
+
+        NSAttributedString *testAttributedString = [[NSAttributedString alloc] initWithString:_testString attributes:@{NSWritingDirectionAttributeName: testWritingDirection}];
+        
+        expect(result).to.equal(testAttributedString);
+    });
 #if !TARGET_OS_IPHONE
     it( @"superscript should change", ^{
         NSNumber *testSuperscript = @(2);
