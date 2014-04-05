@@ -1,3 +1,7 @@
+v0.0.9
+========
+- `attribute` method for maker. Allows to add custom (i.e. CoreText) attributes to a string.
+
 v0.0.8
 ========
 - `last` command for maker. Allows to match last substring or regexp in a string.
