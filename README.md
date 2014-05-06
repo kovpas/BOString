@@ -1,4 +1,4 @@
-NSAttributedString&nbsp;&nbsp;[![Build Status](https://travis-ci.org/kovpas/BOString.png?branch=develop)](https://travis-ci.org/kovpas/BOString)
+NSAttributedString&nbsp;&nbsp;[![Build Status](https://travis-ci.org/kovpas/BOString.png?branch=master)](https://travis-ci.org/kovpas/BOString)
 ========
 
 It's not a secret that NSAttributedString API is far from perfect. Based on NSDictionary, it looks ugly, counter-OOP and hard to maintain...
