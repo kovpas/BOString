@@ -1,6 +1,6 @@
 //
 //  BOStringAttribute.h
-//  BOStringDemo
+//  BOString
 //
 //  Created by Pavel Mazurin on 28/11/13.
 //  Copyright (c) 2013 Pavel Mazurin. All rights reserved.
@@ -49,7 +49,7 @@
 /**
  *  Sets range of the attribute.
  */
-- (BOStringAttribute *(^)(NSRange))range;
+- (instancetype (^)(NSRange))range;
 /**
  *  Sets range of the attribute to whole string. Equivalent:
  *

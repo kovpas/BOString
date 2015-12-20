@@ -1,9 +1,11 @@
-rvm: 1.9.3
 language: objective-c
+osx_image: xcode7.2
+env:
+  - LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
 before_install:
-  - gem install xcpretty
+  - gem install xcpretty -N
   - gem install cocoapods
 
 script:
-  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_iOS' -sdk iphonesimulator7.0 -destination "platform=iOS Simulator,name=iPhone Retina (4-inch),OS=latest" clean build test | xcpretty -c 
-  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_OSX' -sdk macosx10.9 clean build test | xcpretty -c 
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_iOS' -destination "platform=iOS Simulator,name=iPhone Retina (4-inch),OS=latest" clean build test | xcpretty -c 
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_OSX' clean build test | xcpretty -c 
