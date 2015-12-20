@@ -1,6 +1,6 @@
 //
 //  BOStringMaker.h
-//  BOStringDemo
+//  BOString
 //
 //  Created by Pavel Mazurin on 28/11/13.
 //  Copyright (c) 2013 Pavel Mazurin. All rights reserved.
@@ -10,9 +10,13 @@
 @class BOStringAttribute;
 
 #if TARGET_OS_IPHONE
+    #import <UIKit/UIKit.h>
+
     #define BOSColor UIColor
     #define BOSFont UIFont
 #else
+    #import <AppKit/AppKit.h>
+
     #define BOSColor NSColor
     #define BOSFont NSFont
 #endif

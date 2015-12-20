@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "BOString"
-  s.version      = "0.0.9"
+  s.version      = "0.10.0"
   s.summary      = "Create NSAttributedString like a boss!"
   s.homepage     = "https://github.com/kovpas/BOString"
   s.author       = { "Pavel Mazurin" => "kovpas@gmail.com" }

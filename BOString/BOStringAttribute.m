@@ -1,6 +1,6 @@
 //
 //  BOStringAttribute.m
-//  BOStringDemo
+//  BOString
 //
 //  Created by Pavel Mazurin on 28/11/13.
 //  Copyright (c) 2013 Pavel Mazurin. All rights reserved.
@@ -22,7 +22,7 @@
     };
 }
 
-- (BOStringAttribute *(^)(NSRange))range
+- (instancetype (^)(NSRange))range
 {
     return ^BOStringAttribute *(NSRange newRange) {
         _attributeRange = newRange;
