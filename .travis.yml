@@ -7,5 +7,5 @@ before_install:
   - gem install cocoapods
 
 script:
-  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_iOS' -sdk iphonesimulator7.0 -destination "platform=iOS Simulator,name=iPhone Retina (4-inch),OS=latest" clean build test | xcpretty -c 
-  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_OSX' -sdk macosx10.9 clean build test | xcpretty -c 
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_iOS' -destination "platform=iOS Simulator,name=iPhone Retina (4-inch),OS=latest" clean build test | xcpretty -c 
+  - xcodebuild -workspace 'BOString.xcworkspace' -scheme 'BOStringDemo_OSX' clean build test | xcpretty -c 
