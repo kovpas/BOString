@@ -582,6 +582,19 @@ describe(@"Substring should highlight", ^{
 
         expect(result).to.equal(testAttributedString);
     });
+    
+    it(@"all instances, also when containing regexp meta characters", ^{
+        NSString *testString = @"Dollar sign, or $, is a meta character";
+        NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
+            make.each.substring(@"$", ^{
+                make.foregroundColor([BOSColor greenColor]);
+            });
+        }];
+        
+        NSMutableAttributedString *testAttributedString = [[NSMutableAttributedString alloc] initWithString:testString];
+        [testAttributedString addAttribute:NSForegroundColorAttributeName value:[BOSColor greenColor] range:NSMakeRange(16, 1)];
+        expect(result).to.equal(testAttributedString);
+    });
 
     it(@"first regexp match", ^{
         NSAttributedString *result = [testString makeString:^(BOStringMaker *make) {
