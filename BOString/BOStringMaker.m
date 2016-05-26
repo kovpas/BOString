@@ -153,7 +153,7 @@ typedef NS_ENUM(NSInteger, BOStringMakerStringCommand) {
             case BOStringMakerEachStringCommand:
             {
                 NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:string
-                                                                                            options:0
+                                                                                            options:NSRegularExpressionIgnoreMetacharacters
                                                                                               error:nil];
                 
                 NSRange range = NSMakeRange(0, [_attributedString length]);
