@@ -3,7 +3,7 @@ NSAttributedString&nbsp;&nbsp;[![Build Status](https://travis-ci.org/kovpas/BOSt
 
 It's not a secret that NSAttributedString API is far from perfect. Based on NSDictionary, it looks ugly, counter-OOP and hard to maintain...
 
-````
+```obj-c
 NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:@"Test attributed string" attributes:@{NSForegroundColorAttributeName: [UIColor greenColor], NSFontAttributeName: [fnt fontWithSize:20]}];
 [attributedString addAttributes:@{NSForegroundColorAttributeName: [UIColor redColor]
                                   , NSFontAttributeName: [fnt2 fontWithSize:10]
@@ -18,7 +18,7 @@ NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]
                                   , NSBackgroundColorAttributeName: [UIColor yellowColor]}
                           range:NSMakeRange(7, 4)];
 _attributedTextView2.attributedText = attributedString;
-````
+```
 
 Some developers get really desperate and write tools like [this](https://itunes.apple.com/us/app/attributed-string-creator/id730928349?mt=12)... Which again proves that NSAttributedString API is far from perfect.
 
@@ -32,7 +32,7 @@ BOString
 
 So, based on masonry syntax, I decided to create a similar framework, which will take away some pain of creating NSAttributedString:
 
-````
+```obj-c
 NSMutableAttributedString *attributedString = [@"Test attributed string" bos_makeString:^(BOStringMaker *make) {
     make.foregroundColor([UIColor greenColor]);
     make.font([fnt fontWithSize:20]);
@@ -55,28 +55,29 @@ NSMutableAttributedString *attributedString = [@"Test attributed string" bos_mak
         make.backgroundColor([UIColor yellowColor]);
     });
 }];
-````
+```
 
 While making a string you can specify ranges for attributes either with a block-based syntax as in the example above:
-````
+
+```obj-c
 make.with.range(NSMakeRange(6, 9), ^{
     make.foregroundColor([UIColor blueColor]);
     make.font([fnt2 fontWithSize:30]);
 });
-````
+```
 
 or set range for a specific attribute (`with` is an optional semantic filler):
 
-````
+```obj-c
 make.foregroundColor([UIColor blueColor]).with.range(NSRange(6, 9));
 make.font([fnt2 fontWithSize:30]).range(NSRange(6, 9));
-````
+```
 
 If you don't specify range, full range of string will be used.
 
 Which attributes BOString supports? It supports a lot of them:
 
-````
+```obj-c
 font;
 paragraphStyle;
 foregroundColor;
@@ -105,15 +106,15 @@ characterShape;       // OS X only
 glyphInfo;            // OS X only
 markedClauseSegment;  // OS X only
 textAlternatives;     // OS X only
-````
+```
 
 "Wait, you forgot NSTheVeryBestAndUsefulAttribute!"
 =======
 
 Indeed, there are many CoreText attributes that are not defined as methods. I.e. `kCTLanguageAttributeName`, `kCTCharacterShapeAttributeName`, `kCTBaselineClassAttributeName`, etc. In this case you may use `attribute` method:
 
-```
-    make.attribute(kCTLanguageAttributeName, @"jp");
+```obj-c
+make.attribute(kCTLanguageAttributeName, @"jp");
 ```
 
 Even more than just an NSAttributedString maker!
@@ -121,43 +122,43 @@ Even more than just an NSAttributedString maker!
 
 A couple of substring attribute setters. Set attributes for a first substring found:
 
-````
+```obj-c
 NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.first.substring(@"is", ^{
         make.foregroundColor([UIColor greenColor]);
     });
 }];
-````
+```
 
 or highlight every substring:
 
-````
+```obj-c
 NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.each.substring(@"is", ^{
         make.foregroundColor([UIColor greenColor]);
     });
 }];
-````
+```
 
 You can also apply attributes using regular expressions:
 
-````
+```obj-c
 NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.each.regexpMatch(@"\\ws", NSRegularExpressionCaseInsensitive, ^{
         make.foregroundColor([UIColor greenColor]);
     });
 }];
-````
+```
 
 Or regular expressions with groups matching:
 
-````
+```obj-c
 NSAttributedString *result = [@"This is a string" bos_makeString:^(BOStringMaker *make) {
     make.first.regexpGroup(@"[^h](i\\w)\\s(\\w*)", NSRegularExpressionCaseInsensitive, ^{
         make.foregroundColor([UIColor greenColor]);
     });
 }];
-````
+```
 
 Shorthand
 =======
